@@ -1,6 +1,7 @@
 package pw.seppuku.client
 
 import pw.seppuku.client.ecs.engines.SeppukuEngine
+import pw.seppuku.client.ecs.entities.ConfigPersistenceEntity
 import pw.seppuku.client.ecs.entities.PluginLoaderEntity
 import pw.seppuku.client.ecs.systems.minecraft.client.MinecraftClientInitEarlySystem
 import pw.seppuku.client.ecs.systems.mixin.MixinOnLoadSystem
@@ -35,6 +36,7 @@ object Seppuku {
     createAndAddSystemToEngine<MinecraftClientInitEarlySystem>()
 
     generateImplementationCreateAndAddEntityToEngine<PluginLoaderEntity>()
+    generateImplementationCreateAndAddEntityToEngine<ConfigPersistenceEntity>()
   }
 
   private inline fun <reified T : System<*>> createAndAddSystemToEngine() {
