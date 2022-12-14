@@ -9,11 +9,10 @@ import pw.seppuku.client.Seppuku;
 import pw.seppuku.common_systems.ecs.systems.minecraft.client.network.ClientPlayerEntityTickSystem;
 import pw.seppuku.plugin.mixin.ActualThis;
 
-@Mixin(ClientPlayerEntity.class)
-public abstract class ClientPlayerEntityMixin implements ActualThis<ClientPlayerEntity> {
+@Mixin(ClientPlayerEntity.class) public abstract class ClientPlayerEntityMixin
+    implements ActualThis<ClientPlayerEntity> {
 
-  @Inject(method = "tick", at = @At("HEAD"))
-  private void onTickHead(final CallbackInfo callback) {
+  @Inject(method = "tick", at = @At("HEAD")) private void onTickHead(final CallbackInfo callback) {
     Seppuku.INSTANCE.getEngine()
         .findSystem(ClientPlayerEntityTickSystem.class)
         .getProcess()

@@ -16,30 +16,26 @@ data class Keybind(
     HOLD;
 
     internal companion object {
-      internal fun fromOrNull(action: Int): KeybindAction? =
-        when (action) {
-          0 -> RELEASE
-          1 -> PRESS
-          2 -> HOLD
-          else -> null
-        }
+      internal fun fromOrNull(action: Int): KeybindAction? = when (action) {
+        0 -> RELEASE
+        1 -> PRESS
+        2 -> HOLD
+        else -> null
+      }
     }
   }
 
   companion object {
     internal fun onRelease(onReleaseAction: () -> Unit): (KeybindAction) -> Unit = {
-      if (it == RELEASE)
-        onReleaseAction()
+      if (it == RELEASE) onReleaseAction()
     }
 
     internal fun onPress(onPressAction: () -> Unit): (KeybindAction) -> Unit = {
-      if (it == PRESS)
-        onPressAction()
+      if (it == PRESS) onPressAction()
     }
 
     internal fun onHold(onHoldAction: () -> Unit): (KeybindAction) -> Unit = {
-      if (it == HOLD)
-        onHoldAction()
+      if (it == HOLD) onHoldAction()
     }
   }
 }

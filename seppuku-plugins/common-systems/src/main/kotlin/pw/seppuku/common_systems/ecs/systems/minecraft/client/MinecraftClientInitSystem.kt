@@ -8,8 +8,11 @@ import pw.seppuku.ecs.findComponent
 import pw.seppuku.ecs.findComponentOrNull
 import pw.seppuku.ecs.systems.ArchetypeSystem
 
-class MinecraftClientInitSystem :
-  ArchetypeSystem<MinecraftClientInitCallback>(archetype(MinecraftClientInit::class)) {
+class MinecraftClientInitSystem : ArchetypeSystem<MinecraftClientInitCallback>(
+  archetype(
+    MinecraftClientInit::class
+  )
+) {
   override val process: MinecraftClientInitCallback = { runArgs ->
     val minecraftClient = this
 

@@ -8,12 +8,11 @@ import pw.seppuku.ecs.findComponent
 import pw.seppuku.ecs.findComponentOrNull
 import pw.seppuku.ecs.systems.ArchetypeSystem
 
-class ClientPlayerInteractionManagerUpdateBlockBreakingProgressSystem :
-  ArchetypeSystem<ClientPlayerInteractionManagerUpdateBlockBreakingProgressCallback>(
-    archetype(
-      ClientPlayerInteractionManagerUpdateBlockBreakingProgress::class
-    )
-  ) {
+class ClientPlayerInteractionManagerUpdateBlockBreakingProgressSystem : ArchetypeSystem<ClientPlayerInteractionManagerUpdateBlockBreakingProgressCallback>(
+  archetype(
+    ClientPlayerInteractionManagerUpdateBlockBreakingProgress::class
+  )
+) {
   override val process: ClientPlayerInteractionManagerUpdateBlockBreakingProgressCallback =
     { blockPos, direction ->
       val clientPlayerInteractionManager = this

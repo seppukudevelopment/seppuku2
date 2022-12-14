@@ -6,7 +6,6 @@ import kotlin.reflect.KClassifier
 import kotlin.reflect.KFunction
 
 internal object DependencyResolver {
-
   internal fun resolveDependency(
     dependencyClassifier: KClassifier?,
     dependencyTypeToDependencyProvider: Map<KClass<*>, DependencyProvider<out Any>>
@@ -28,15 +27,14 @@ internal object DependencyResolver {
   private fun <T : Any> findSuitableConstructor(
     dependencyClass: KClass<T>,
     dependencyClassToDependencyProviderMap: Map<KClass<*>, DependencyProvider<out Any>>
-  ): KFunction<T>? =
-    dependencyClass.constructors.associateBy {
-      resolveDependencies(
-        it,
-        dependencyClassToDependencyProviderMap
-      )
-    }
-      .filterKeys { it != null }.toSortedMap(Comparator.comparingInt { it!!.size })
-      .firstNotNullOfOrNull { it.value }
+  ): KFunction<T>? = dependencyClass.constructors.associateBy {
+    resolveDependencies(
+      it, dependencyClassToDependencyProviderMap
+    )
+  }
+    .filterKeys { it != null }
+    .toSortedMap(Comparator.comparingInt { it!!.size })
+    .firstNotNullOfOrNull { it.value }
 
   private fun <T : Any> resolveDependencies(
     constructor: KFunction<T>,

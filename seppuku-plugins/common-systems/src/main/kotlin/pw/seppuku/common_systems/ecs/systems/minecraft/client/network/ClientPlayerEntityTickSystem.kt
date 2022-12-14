@@ -8,8 +8,11 @@ import pw.seppuku.ecs.findComponent
 import pw.seppuku.ecs.findComponentOrNull
 import pw.seppuku.ecs.systems.ArchetypeSystem
 
-class ClientPlayerEntityTickSystem :
-  ArchetypeSystem<ClientPlayerEntityTickCallback>(archetype(ClientPlayerEntityTick::class)) {
+class ClientPlayerEntityTickSystem : ArchetypeSystem<ClientPlayerEntityTickCallback>(
+  archetype(
+    ClientPlayerEntityTick::class
+  )
+) {
   override val process: ClientPlayerEntityTickCallback = {
     val clientPlayerEntity = this
 

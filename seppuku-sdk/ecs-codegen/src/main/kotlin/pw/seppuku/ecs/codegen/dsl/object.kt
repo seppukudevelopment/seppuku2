@@ -22,64 +22,55 @@ internal fun MethodVisitor.newarray(count: Int) = visitIntInsn(NEWARRAY, count)
 internal fun MethodVisitor.multinewarray(
   descriptor: String,
   dimensions: Int
-) =
-  visitMultiANewArrayInsn(descriptor, dimensions)
+) = visitMultiANewArrayInsn(descriptor, dimensions)
 
 internal fun MethodVisitor.getfield(
   owner: String,
   name: String,
   descriptor: String
-) =
-  visitFieldInsn(GETFIELD, owner, name, descriptor)
+) = visitFieldInsn(GETFIELD, owner, name, descriptor)
 
 internal fun MethodVisitor.putfield(
   owner: String,
   name: String,
   descriptor: String
-) =
-  visitFieldInsn(PUTFIELD, owner, name, descriptor)
+) = visitFieldInsn(PUTFIELD, owner, name, descriptor)
 
 internal fun MethodVisitor.getfield(
   owner: DslType,
   name: String,
   descriptor: DslType
-) =
-  visitFieldInsn(GETFIELD, owner.coerce().internalName, name, descriptor.coerce().descriptor)
+) = visitFieldInsn(GETFIELD, owner.coerce().internalName, name, descriptor.coerce().descriptor)
 
 internal fun MethodVisitor.putfield(
   owner: DslType,
   name: String,
   descriptor: DslType
-) =
-  visitFieldInsn(PUTFIELD, owner.coerce().internalName, name, descriptor.coerce().descriptor)
+) = visitFieldInsn(PUTFIELD, owner.coerce().internalName, name, descriptor.coerce().descriptor)
 
 internal fun MethodVisitor.getstatic(
   owner: String,
   name: String,
   descriptor: String
-) =
-  visitFieldInsn(GETSTATIC, owner, name, descriptor)
+) = visitFieldInsn(GETSTATIC, owner, name, descriptor)
 
 internal fun MethodVisitor.putstatic(
   owner: String,
   name: String,
   descriptor: String
-) =
-  visitFieldInsn(PUTSTATIC, owner, name, descriptor)
+) = visitFieldInsn(PUTSTATIC, owner, name, descriptor)
 
 internal fun MethodVisitor.getstatic(
   owner: DslType,
   name: String,
   descriptor: DslType
-) =
-  visitFieldInsn(GETSTATIC, owner.coerce().internalName, name, descriptor.coerce().descriptor)
+) = visitFieldInsn(GETSTATIC, owner.coerce().internalName, name, descriptor.coerce().descriptor)
 
 internal fun MethodVisitor.putstatic(
   owner: DslType,
   name: String,
   descriptor: DslType
-) =
-  visitFieldInsn(PUTSTATIC, owner.coerce().internalName, name, descriptor.coerce().descriptor)
+) = visitFieldInsn(PUTSTATIC, owner.coerce().internalName, name, descriptor.coerce().descriptor)
 
 internal fun MethodVisitor.checkcast(type: String) = visitTypeInsn(CHECKCAST, type)
 internal fun MethodVisitor.instanceof(type: String) = visitTypeInsn(INSTANCEOF, type)

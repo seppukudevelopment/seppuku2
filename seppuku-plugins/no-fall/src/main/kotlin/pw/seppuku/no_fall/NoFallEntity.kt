@@ -12,26 +12,18 @@ import pw.seppuku.keybind_dispatcher.ecs.components.onRelease
 import pw.seppuku.settings.config.ConfigFactory
 import pw.seppuku.settings.config.setting
 
-abstract class NoFallEntity(
-  configFactory: ConfigFactory
-) : Entity {
+abstract class NoFallEntity(configFactory: ConfigFactory) : Entity {
+  @Component val humanIdentifier = HumanIdentifier("no_fall")
 
-  @Component
-  val humanIdentifier = HumanIdentifier("no_fall")
+  @Component val config = configFactory.create("no_fall")
 
-  @Component
-  val config = configFactory.create("no_fall")
+  @Component val toggle by config.setting("toggle", Toggle())
 
-  @Component
-  val toggle by config.setting("toggle", Toggle())
-
-  @Component
-  val keybind by config.setting("keybind", onRelease(GLFW.GLFW_KEY_C) {
+  @Component val keybind by config.setting("keybind", onRelease(GLFW.GLFW_KEY_C) {
     toggle.state = !toggle.state
   })
 
-  @Component
-  val clientConnectionSend = ClientConnectionSend { packet ->
+  @Component val clientConnectionSend = ClientConnectionSend { packet ->
     if (packet is PlayerMoveC2SPacket) {
       packet as IPlayerMoveC2SPacket
       packet.setOnGround(false)

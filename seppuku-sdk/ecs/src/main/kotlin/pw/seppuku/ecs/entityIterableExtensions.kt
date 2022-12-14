@@ -7,8 +7,7 @@ typealias ComponentPredicate<T> = T.() -> Boolean
 inline fun <T : Any> Iterable<Entity>.hasComponent(
   componentClass: Class<T>,
   componentPredicate: ComponentPredicate<T>
-) =
-  filter { it.findComponentOrNull(componentClass)?.componentPredicate() == true }
+) = filter { it.findComponentOrNull(componentClass)?.componentPredicate() == true }
 
 inline fun <T : Any> Iterable<Entity>.hasComponent(
   componentClass: KClass<T>,

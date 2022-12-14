@@ -14,15 +14,12 @@ import kotlin.reflect.jvm.jvmErasure
 internal typealias EntityComponentGraph = List<EntityComponent>
 
 internal fun <T : Entity> buildEntityComponentGraph(entityClass: KClass<T>): EntityComponentGraph =
-  buildEntityComponentGraphNoSuper(entityClass) +
-    entityClass.allSuperclasses
-      .map { buildEntityComponentGraphNoSuper(it) }
-      .flatten()
+  buildEntityComponentGraphNoSuper(entityClass) + entityClass.allSuperclasses.map {
+    buildEntityComponentGraphNoSuper(it)
+  }.flatten()
 
 private fun buildEntityComponentGraphNoSuper(entityClass: KClass<*>): EntityComponentGraph =
-  entityClass
-    .memberProperties
-    .filter { it.javaField?.declaringClass == entityClass.java }
+  entityClass.memberProperties.filter { it.javaField?.declaringClass == entityClass.java }
     .filter(::hasComponentAnnotation)
     .mapNotNull {
       EntityComponent(

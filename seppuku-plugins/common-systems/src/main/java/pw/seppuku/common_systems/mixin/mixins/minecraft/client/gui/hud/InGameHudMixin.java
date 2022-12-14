@@ -10,8 +10,7 @@ import pw.seppuku.client.Seppuku;
 import pw.seppuku.common_systems.ecs.systems.minecraft.client.gui.hud.InGameHudRenderSystem;
 import pw.seppuku.plugin.mixin.ActualThis;
 
-@Mixin(InGameHud.class)
-public abstract class InGameHudMixin implements ActualThis<InGameHud> {
+@Mixin(InGameHud.class) public abstract class InGameHudMixin implements ActualThis<InGameHud> {
 
   @Inject(method = "render", at = @At("TAIL"))
   private void onRenderTail(final MatrixStack matrices, final float tickDelta,

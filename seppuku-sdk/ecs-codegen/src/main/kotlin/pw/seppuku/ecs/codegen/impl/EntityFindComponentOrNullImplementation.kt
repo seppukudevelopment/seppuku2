@@ -8,8 +8,7 @@ import pw.seppuku.ecs.codegen.graph.EntityComponentGraph
 internal class EntityFindComponentOrNullImplementation(
   private val entityComponentGraph: EntityComponentGraph
 ) : Implementation {
-  override fun prepare(instrumentedType: InstrumentedType): InstrumentedType =
-    instrumentedType
+  override fun prepare(instrumentedType: InstrumentedType): InstrumentedType = instrumentedType
 
   override fun appender(implementationTarget: Implementation.Target): ByteCodeAppender =
     EntityFindComponentOrNullByteCodeAppender(entityComponentGraph)

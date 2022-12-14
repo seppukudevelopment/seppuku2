@@ -28,15 +28,13 @@ internal abstract class PluginLoaderEntity(
   private val engine: Engine
 ) : Entity {
 
-  @Component
-  val humanIdentifier = HumanIdentifier("plugin_loader")
+  @Component val humanIdentifier = HumanIdentifier("plugin_loader")
 
   private val loadedPluginClasses = mutableListOf<Class<*>>()
 
   private lateinit var knotClassLoader: ClassLoader
 
-  @Component
-  val mixinOnLoad = MixinOnLoad {
+  @Component val mixinOnLoad = MixinOnLoad {
     knotClassLoader = Thread.currentThread().contextClassLoader
 
     // Ghetto way of preventing ConcurrentModificationException,
@@ -49,8 +47,7 @@ internal abstract class PluginLoaderEntity(
     }
   }
 
-  @Component
-  val minecraftClientInitEarly = MinecraftClientInitEarly {
+  @Component val minecraftClientInitEarly = MinecraftClientInitEarly {
     dependencyInjector.bind(MinecraftClient::class to DependencyProvider.singleton(this))
 
     getPluginPaths().forEach {
@@ -61,19 +58,15 @@ internal abstract class PluginLoaderEntity(
     createAndAddPluginEntitiesToEngine()
   }
 
-  @Suppress("UNCHECKED_CAST")
-  private fun createAndAddPluginSystemsToEngine() {
-    loadedPluginClasses
-      .filter { System::class.java.isAssignableFrom(it) }
+  @Suppress("UNCHECKED_CAST") private fun createAndAddPluginSystemsToEngine() {
+    loadedPluginClasses.filter { System::class.java.isAssignableFrom(it) }
       .map { it.kotlin as KClass<out System<*>> }
       .map { dependencyInjector.create(it) }
       .forEach(engine::addSystem)
   }
 
-  @Suppress("UNCHECKED_CAST")
-  private fun createAndAddPluginEntitiesToEngine() {
-    loadedPluginClasses
-      .filter { Entity::class.java.isAssignableFrom(it) }
+  @Suppress("UNCHECKED_CAST") private fun createAndAddPluginEntitiesToEngine() {
+    loadedPluginClasses.filter { Entity::class.java.isAssignableFrom(it) }
       .map { it.kotlin as KClass<out Entity> }
       .map { entityCodeGenerator.generateImplementationClass(it, knotClassLoader) }
       .map { dependencyInjector.create(it) }
@@ -84,7 +77,9 @@ internal abstract class PluginLoaderEntity(
     val pluginPaths = mutableListOf<Path>()
 
     // Can't use Kotlin walkFileTree because Kotlin is not in the KnotClassLoader yet
-    Files.walkFileTree(Path.of("seppuku", "plugins"), EnumSet.of(FileVisitOption.FOLLOW_LINKS), 1,
+    Files.walkFileTree(Path.of("seppuku", "plugins"),
+      EnumSet.of(FileVisitOption.FOLLOW_LINKS),
+      1,
       object : SimpleFileVisitor<Path>() {
         override fun visitFile(
           path: Path,
@@ -99,13 +94,11 @@ internal abstract class PluginLoaderEntity(
   }
 
   private fun Path.injectPluginResourcesIntoKnotClassLoader() {
-    val knotUrlLoader = knotClassLoader::class.java
-      .getDeclaredField("urlLoader")
+    val knotUrlLoader = knotClassLoader::class.java.getDeclaredField("urlLoader")
       .apply { isAccessible = true }
       .get(knotClassLoader)
 
-    knotUrlLoader::class.java
-      .getDeclaredMethod("addURL", URL::class.java)
+    knotUrlLoader::class.java.getDeclaredMethod("addURL", URL::class.java)
       .apply { isAccessible = true }
       .invoke(knotUrlLoader, toUri().toURL())
   }
@@ -114,14 +107,10 @@ internal abstract class PluginLoaderEntity(
     val pluginZipFile = ZipFile(toFile())
 
     val pluginClassLoader = URLClassLoader(arrayOf(toUri().toURL()), knotClassLoader)
-    val pluginClasses = pluginZipFile
-      .entries()
-      .toList()
-      .filter { it.name.endsWith(".class") }
+    val pluginClasses = pluginZipFile.entries().toList().filter { it.name.endsWith(".class") }
       // Ghetto fix but it works for now, ideally read the class
       // bytes and check for the Mixin annotation
-      .filterNot { it.name.contains("Mixin") }
-      .map {
+      .filterNot { it.name.contains("Mixin") }.map {
         pluginClassLoader.loadClass(it.name.substring(0, it.name.length - 6).replace("/", "."))
       }
 
@@ -130,11 +119,9 @@ internal abstract class PluginLoaderEntity(
 
   private fun Path.addPluginMixinConfigurationsToMixinConfigurations() {
     val pluginZipFile = ZipFile(toFile())
-    pluginZipFile.entries().toList()
-      .filter { it.name.endsWith(".mixins.json") }
-      .forEach {
-        Mixins.addConfiguration(it.name)
-      }
+    pluginZipFile.entries().toList().filter { it.name.endsWith(".mixins.json") }.forEach {
+      Mixins.addConfiguration(it.name)
+    }
   }
 
   private companion object {

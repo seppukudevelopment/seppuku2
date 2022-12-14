@@ -15,21 +15,15 @@ abstract class HeadsUpDisplayEntity(
   private val minecraftClient: MinecraftClient,
 ) : Entity {
 
-  @Component
-  val humanIdentifier = HumanIdentifier("heads_up_display")
+  @Component val humanIdentifier = HumanIdentifier("heads_up_display")
 
-  @Component
-  val inGameHudRender = InGameHudRender { matrices, _ ->
+  @Component val inGameHudRender = InGameHudRender { matrices, _ ->
     if (minecraftClient.options.debugEnabled) return@InGameHudRender
 
     textRenderer.run {
       drawWithShadow(matrices, "seppuku", 2f, 2f, 0xffffff)
       drawWithShadow(
-        matrices,
-        "${minecraftClient.player?.blockPos?.toShortString()}",
-        2f,
-        11f,
-        0xffffff
+        matrices, "${minecraftClient.player?.blockPos?.toShortString()}", 2f, 11f, 0xffffff
       )
 
       engine.hasComponent<Toggle> { state }

@@ -12,16 +12,14 @@ internal data class EntityComponent(
   val componentFieldName: String,
   val componentGetterName: String,
 ) {
-
   internal fun matchWithExit(
     methodVisitor: MethodVisitor,
     exit: Label,
     matching: MethodVisitor.() -> Unit
-  ) =
-    methodVisitor.run {
-      ldc(componentClass)
-      if_acmpne(exit)
+  ) = methodVisitor.run {
+    ldc(componentClass)
+    if_acmpne(exit)
 
-      matching()
-    }
+    matching()
+  }
 }

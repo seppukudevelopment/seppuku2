@@ -18,22 +18,17 @@ abstract class AutoToolEntity(
   private val minecraftClient: MinecraftClient
 ) : Entity {
 
-  @Component
-  val humanIdentifier = HumanIdentifier("auto_tool")
+  @Component val humanIdentifier = HumanIdentifier("auto_tool")
 
-  @Component
-  val config = configFactory.create("auto_tool")
+  @Component val config = configFactory.create("auto_tool")
 
-  @Component
-  val toggle by config.setting("toggle", Toggle())
+  @Component val toggle by config.setting("toggle", Toggle())
 
-  @Component
-  val keybind by config.setting("keybind", onRelease(GLFW.GLFW_KEY_Z) {
+  @Component val keybind by config.setting("keybind", onRelease(GLFW.GLFW_KEY_Z) {
     toggle.state = !toggle.state
   })
 
-  @Component
-  val clientPlayerInteractionManagerAttackBlock =
+  @Component val clientPlayerInteractionManagerAttackBlock =
     ClientPlayerInteractionManagerAttackBlock { blockPos, _ ->
       val blockState = blockPos.getBlockState() ?: return@ClientPlayerInteractionManagerAttackBlock
       val bestRatedSlot =
@@ -44,10 +39,9 @@ abstract class AutoToolEntity(
   private fun BlockPos.getBlockState(): BlockState? =
     this@AutoToolEntity.minecraftClient.world?.getBlockState(this)
 
-  private fun BlockState.getBestRatedSlot(): Int? =
-    (0..9).maxByOrNull {
-      this.getSlotRating(it)
-    }
+  private fun BlockState.getBestRatedSlot(): Int? = (0..9).maxByOrNull {
+    this.getSlotRating(it)
+  }
 
   private fun BlockState.getSlotRating(index: Int): Float =
     this@AutoToolEntity.minecraftClient.player?.inventory?.getStack(index)

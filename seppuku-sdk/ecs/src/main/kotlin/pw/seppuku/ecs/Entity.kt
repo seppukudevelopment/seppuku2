@@ -6,7 +6,6 @@ interface Entity {
 
   fun <T : Any> findComponentOrNull(componentClass: Class<T>): T? = null
 
-  fun <T : Any> findComponent(componentClass: Class<T>): T =
-    findComponentOrNull(componentClass)
-      ?: error("Could not find component '${componentClass.simpleName}' in entity '${this::class.simpleName}")
+  fun <T : Any> findComponent(componentClass: Class<T>): T = findComponentOrNull(componentClass)
+    ?: error("Could not find component '${componentClass.simpleName}' in entity '${this::class.simpleName}")
 }

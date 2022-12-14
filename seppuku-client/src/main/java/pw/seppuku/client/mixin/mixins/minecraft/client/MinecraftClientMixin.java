@@ -10,8 +10,8 @@ import pw.seppuku.client.Seppuku;
 import pw.seppuku.client.ecs.systems.minecraft.client.MinecraftClientInitEarlySystem;
 import pw.seppuku.plugin.mixin.ActualThis;
 
-@Mixin(MinecraftClient.class)
-public abstract class MinecraftClientMixin implements ActualThis<MinecraftClient> {
+@Mixin(MinecraftClient.class) public abstract class MinecraftClientMixin
+    implements ActualThis<MinecraftClient> {
 
   @Inject(method = "<init>", at = @At("TAIL"))
   private void onInitTail(final RunArgs runArgs, final CallbackInfo callback) {

@@ -15,31 +15,24 @@ abstract class VanillaFlyEntity(
   configFactory: ConfigFactory,
   private val minecraftClient: MinecraftClient
 ) : Entity {
+  @Component val humanIdentifier = HumanIdentifier("vanilla_fly")
 
-  @Component
-  val humanIdentifier = HumanIdentifier("vanilla_fly")
+  @Component val config = configFactory.create("sprint")
 
-  @Component
-  val config = configFactory.create("sprint")
-
-  @Component
-  val toggle by config.setting("toggle", Toggle {
-    minecraftClient.player?.abilities?.allowFlying = this
-
+  @Component val toggle by config.setting("toggle", Toggle {
     if (this && minecraftClient.player?.isOnGround == true) {
       minecraftClient.player?.jump()
     }
 
+    minecraftClient.player?.abilities?.allowFlying = this
     minecraftClient.player?.abilities?.flying = this
   })
 
   @Component val keybind by config.setting("keybind", onRelease(GLFW.GLFW_KEY_N) {
-    tickCount = 0
     toggle.state = !toggle.state
   })
 
-  @Component
-  val clientPlayerEntityTick = ClientPlayerEntityTick {
+  @Component val clientPlayerEntityTick = ClientPlayerEntityTick {
     this.abilities.allowFlying = true
   }
 }

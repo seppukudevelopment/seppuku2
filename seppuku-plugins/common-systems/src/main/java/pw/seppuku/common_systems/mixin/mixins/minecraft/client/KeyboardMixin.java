@@ -9,18 +9,11 @@ import pw.seppuku.client.Seppuku;
 import pw.seppuku.common_systems.ecs.systems.minecraft.client.KeyboardOnKeySystem;
 import pw.seppuku.plugin.mixin.ActualThis;
 
-@Mixin(Keyboard.class)
-public abstract class KeyboardMixin implements ActualThis<Keyboard> {
+@Mixin(Keyboard.class) public abstract class KeyboardMixin implements ActualThis<Keyboard> {
 
   @Inject(method = "onKey", at = @At("HEAD"))
-  private void onKeyHead(
-      final long window,
-      final int key,
-      final int scanCode,
-      final int action,
-      final int modifiers,
-      final CallbackInfo callback
-  ) {
+  private void onKeyHead(final long window, final int key, final int scanCode, final int action,
+      final int modifiers, final CallbackInfo callback) {
     Seppuku.INSTANCE.getEngine()
         .findSystem(KeyboardOnKeySystem.class)
         .getProcess()
