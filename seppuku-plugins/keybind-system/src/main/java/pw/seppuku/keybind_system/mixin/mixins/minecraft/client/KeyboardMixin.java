@@ -1,4 +1,4 @@
-package pw.seppuku.keybind_dispatcher.mixin.mixins.minecraft.client;
+package pw.seppuku.keybind_system.mixin.mixins.minecraft.client;
 
 import net.minecraft.client.Keyboard;
 import org.spongepowered.asm.mixin.Mixin;
@@ -6,7 +6,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import pw.seppuku.client.Seppuku;
-import pw.seppuku.keybind_dispatcher.ecs.systems.KeybindSystem;
+import pw.seppuku.keybind_system.ecs.systems.KeybindSystem;
 import pw.seppuku.plugin.mixin.ActualThis;
 
 @Mixin(Keyboard.class) public abstract class KeyboardMixin implements ActualThis<Keyboard> {

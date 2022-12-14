@@ -1,8 +1,8 @@
-package pw.seppuku.keybind_dispatcher.ecs.components
+package pw.seppuku.keybind_system.ecs.components
 
-import pw.seppuku.keybind_dispatcher.ecs.components.Keybind.KeybindAction.HOLD
-import pw.seppuku.keybind_dispatcher.ecs.components.Keybind.KeybindAction.PRESS
-import pw.seppuku.keybind_dispatcher.ecs.components.Keybind.KeybindAction.RELEASE
+import pw.seppuku.keybind_system.ecs.components.Keybind.KeybindAction.HOLD
+import pw.seppuku.keybind_system.ecs.components.Keybind.KeybindAction.PRESS
+import pw.seppuku.keybind_system.ecs.components.Keybind.KeybindAction.RELEASE
 
 data class Keybind(
   val key: Int,

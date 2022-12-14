@@ -12,7 +12,7 @@ dependencies {
 
   projects {
     implementation(seppukuPlugins.commonSystems) { targetConfiguration = "namedElements" }
-    implementation(seppukuPlugins.keybindDispatcher) { targetConfiguration = "namedElements" }
+    implementation(seppukuPlugins.keybindSystem) { targetConfiguration = "namedElements" }
 
     implementation(seppukuSdk.components)
     implementation(seppukuSdk.ecs)

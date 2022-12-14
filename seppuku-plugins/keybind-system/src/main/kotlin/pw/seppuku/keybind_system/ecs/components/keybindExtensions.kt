@@ -1,4 +1,6 @@
-package pw.seppuku.keybind_dispatcher.ecs.components
+package pw.seppuku.keybind_system.ecs.components
+
+import pw.seppuku.keybind_system.ecs.components.Keybind.Companion
 
 fun onRelease(
   key: Int,
