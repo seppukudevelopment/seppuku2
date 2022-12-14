@@ -1,4 +1,4 @@
-package pw.seppuku.sprint
+package pw.seppuku.sprint.ecs.entities
 
 import net.minecraft.client.MinecraftClient
 import org.lwjgl.glfw.GLFW

@@ -1,4 +1,4 @@
-package pw.seppuku.heads_up_display
+package pw.seppuku.heads_up_display.ecs.entities
 
 import net.minecraft.client.MinecraftClient
 import pw.seppuku.common_systems.ecs.components.minecraft.client.hud.gui.InGameHudRender

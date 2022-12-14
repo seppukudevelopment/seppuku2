@@ -1,4 +1,4 @@
-package pw.seppuku.vanilla_fly
+package pw.seppuku.vanilla_fly.ecs.entities
 
 import net.minecraft.client.MinecraftClient
 import org.lwjgl.glfw.GLFW

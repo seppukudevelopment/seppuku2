@@ -1,4 +1,4 @@
-package pw.seppuku.fast_mine
+package pw.seppuku.fast_mine.ecs.entities
 
 import org.lwjgl.glfw.GLFW
 import pw.seppuku.common_accessors.mixin.mixins.minecraft.client.network.IClientPlayerInteractionManagerMixin

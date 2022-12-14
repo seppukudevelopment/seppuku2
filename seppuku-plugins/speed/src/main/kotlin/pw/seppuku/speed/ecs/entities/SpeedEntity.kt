@@ -1,4 +1,4 @@
-package pw.seppuku.speed
+package pw.seppuku.speed.ecs.entities
 
 import net.minecraft.util.math.Vec3d
 import org.lwjgl.glfw.GLFW

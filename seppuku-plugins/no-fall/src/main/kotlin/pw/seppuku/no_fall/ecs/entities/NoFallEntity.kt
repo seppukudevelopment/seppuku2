@@ -1,4 +1,4 @@
-package pw.seppuku.no_fall
+package pw.seppuku.no_fall.ecs.entities
 
 import net.minecraft.network.packet.c2s.play.PlayerMoveC2SPacket
 import org.lwjgl.glfw.GLFW

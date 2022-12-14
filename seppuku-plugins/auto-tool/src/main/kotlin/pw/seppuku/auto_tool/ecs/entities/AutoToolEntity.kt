@@ -1,4 +1,4 @@
-package pw.seppuku.auto_tool
+package pw.seppuku.auto_tool.ecs.entities
 
 import net.minecraft.block.BlockState
 import net.minecraft.client.MinecraftClient
