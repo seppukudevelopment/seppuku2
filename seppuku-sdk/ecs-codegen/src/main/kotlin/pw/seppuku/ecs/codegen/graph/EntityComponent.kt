@@ -12,7 +12,7 @@ internal data class EntityComponent(
   val componentFieldName: String,
   val componentGetterName: String,
 ) {
-  internal fun matchWithExit(
+  internal inline fun matchWithExit(
     methodVisitor: MethodVisitor,
     exit: Label,
     matching: MethodVisitor.() -> Unit

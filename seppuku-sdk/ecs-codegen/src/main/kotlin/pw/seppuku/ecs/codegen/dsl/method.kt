@@ -1,3 +1,5 @@
+@file:Suppress("NOTHING_TO_INLINE")
+
 package pw.seppuku.ecs.codegen.dsl
 
 import net.bytebuddy.jar.asm.MethodVisitor
@@ -13,34 +15,34 @@ import net.bytebuddy.jar.asm.Opcodes.LRETURN
 import net.bytebuddy.jar.asm.Opcodes.RETURN
 import net.bytebuddy.jar.asm.Type
 
-internal fun MethodVisitor.invokeinterface(
+internal inline fun MethodVisitor.invokeinterface(
   owner: DslType,
   name: String,
   descriptor: String
 ) = visitMethodInsn(INVOKEINTERFACE, owner.coerce().internalName, name, descriptor, true)
 
-internal fun MethodVisitor.invokevirtual(
+internal inline fun MethodVisitor.invokevirtual(
   owner: DslType,
   name: String,
   descriptor: String,
   isInterface: Boolean = false
 ) = visitMethodInsn(INVOKEVIRTUAL, owner.coerce().internalName, name, descriptor, isInterface)
 
-internal fun MethodVisitor.invokespecial(
+internal inline fun MethodVisitor.invokespecial(
   owner: DslType,
   name: String,
   descriptor: String,
   isInterface: Boolean = false
 ) = visitMethodInsn(INVOKESPECIAL, owner.coerce().internalName, name, descriptor, isInterface)
 
-internal fun MethodVisitor.invokestatic(
+internal inline fun MethodVisitor.invokestatic(
   owner: DslType,
   name: String,
   descriptor: String,
   isInterface: Boolean = false
 ) = visitMethodInsn(INVOKESTATIC, owner.coerce().internalName, name, descriptor, isInterface)
 
-internal fun MethodVisitor.invokeinterface(
+internal inline fun MethodVisitor.invokeinterface(
   owner: DslType,
   name: String,
   returnType: DslType,
@@ -53,7 +55,7 @@ internal fun MethodVisitor.invokeinterface(
   true
 )
 
-internal fun MethodVisitor.invokevirtual(
+internal inline fun MethodVisitor.invokevirtual(
   owner: DslType,
   name: String,
   returnType: DslType,
@@ -67,7 +69,7 @@ internal fun MethodVisitor.invokevirtual(
   isInterface
 )
 
-internal fun MethodVisitor.invokespecial(
+internal inline fun MethodVisitor.invokespecial(
   owner: DslType,
   name: String,
   returnType: DslType,
@@ -81,7 +83,7 @@ internal fun MethodVisitor.invokespecial(
   isInterface
 )
 
-internal fun MethodVisitor.invokestatic(
+internal inline fun MethodVisitor.invokestatic(
   owner: DslType,
   name: String,
   returnType: DslType,
@@ -95,9 +97,9 @@ internal fun MethodVisitor.invokestatic(
   isInterface
 )
 
-internal fun MethodVisitor._return() = visitInsn(RETURN)
-internal fun MethodVisitor.areturn() = visitInsn(ARETURN)
-internal fun MethodVisitor.dreturn() = visitInsn(DRETURN)
-internal fun MethodVisitor.freturn() = visitInsn(FRETURN)
-internal fun MethodVisitor.ireturn() = visitInsn(IRETURN)
-internal fun MethodVisitor.lreturn() = visitInsn(LRETURN)
+internal inline fun MethodVisitor.`return`() = visitInsn(RETURN)
+internal inline fun MethodVisitor.areturn() = visitInsn(ARETURN)
+internal inline fun MethodVisitor.dreturn() = visitInsn(DRETURN)
+internal inline fun MethodVisitor.freturn() = visitInsn(FRETURN)
+internal inline fun MethodVisitor.ireturn() = visitInsn(IRETURN)
+internal inline fun MethodVisitor.lreturn() = visitInsn(LRETURN)

@@ -1,3 +1,5 @@
+@file:Suppress("NOTHING_TO_INLINE")
+
 package pw.seppuku.ecs.codegen.dsl
 
 import net.bytebuddy.description.type.TypeDescription
@@ -6,7 +8,7 @@ import kotlin.reflect.KClass
 
 internal typealias DslType = Any
 
-internal fun DslType.coerce(): Type = when (this) {
+internal inline fun DslType.coerce(): Type = when (this) {
   is Type -> this
   is String -> Type.getObjectType(this)
   is Class<*> -> Type.getType(this)

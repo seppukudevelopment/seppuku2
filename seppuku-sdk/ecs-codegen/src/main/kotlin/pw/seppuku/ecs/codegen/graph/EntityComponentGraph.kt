@@ -1,3 +1,5 @@
+@file:Suppress("NOTHING_TO_INLINE")
+
 package pw.seppuku.ecs.codegen.graph
 
 import pw.seppuku.ecs.Component
@@ -30,5 +32,5 @@ private fun buildEntityComponentGraphNoSuper(entityClass: KClass<*>): EntityComp
       )
     }
 
-private fun hasComponentAnnotation(property: KProperty1<*, *>): Boolean =
+private inline fun hasComponentAnnotation(property: KProperty1<*, *>): Boolean =
   property.hasAnnotation<Component>() or property.getter.hasAnnotation<Component>()

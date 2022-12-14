@@ -1,3 +1,5 @@
+@file:Suppress("NOTHING_TO_INLINE")
+
 package pw.seppuku.ecs
 
 import kotlin.reflect.KClass
@@ -32,19 +34,19 @@ inline fun <T : Any> Iterable<Entity>.hasOptionalComponent(
 inline fun <reified T : Any> Iterable<Entity>.hasOptionalComponent(componentPredicate: ComponentPredicate<T?>) =
   hasOptionalComponent(T::class.java, componentPredicate)
 
-fun <T : Any> Iterable<Entity>.mapComponent(componentClass: Class<T>): Iterable<T> =
+inline fun <T : Any> Iterable<Entity>.mapComponent(componentClass: Class<T>): Iterable<T> =
   mapNotNull { it.findComponentOrNull(componentClass) }
 
-fun <T : Any> Iterable<Entity>.mapComponent(componentClass: KClass<T>): Iterable<T> =
+inline fun <T : Any> Iterable<Entity>.mapComponent(componentClass: KClass<T>): Iterable<T> =
   mapComponent(componentClass.java)
 
 inline fun <reified T : Any> Iterable<Entity>.mapComponent(): Iterable<T> =
   mapComponent(T::class.java)
 
-fun <T : Any> Iterable<Entity>.mapOptionalComponent(componentClass: Class<T>): Iterable<T?> =
+inline fun <T : Any> Iterable<Entity>.mapOptionalComponent(componentClass: Class<T>): Iterable<T?> =
   map { it.findComponentOrNull(componentClass) }
 
-fun <T : Any> Iterable<Entity>.mapOptionalComponent(componentClass: KClass<T>): Iterable<T?> =
+inline fun <T : Any> Iterable<Entity>.mapOptionalComponent(componentClass: KClass<T>): Iterable<T?> =
   mapOptionalComponent(componentClass.java)
 
 inline fun <reified T : Any> Iterable<Entity>.mapOptionalComponent(): Iterable<T?> =
