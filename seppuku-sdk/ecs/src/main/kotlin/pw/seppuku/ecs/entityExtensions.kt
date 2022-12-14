@@ -5,7 +5,7 @@ package pw.seppuku.ecs
 import kotlin.reflect.KClass
 
 inline fun <T : Any> Entity.hasComponent(componentClass: KClass<T>): Boolean =
-  hasComponent(componentClass::class.java)
+  hasComponent(componentClass.java)
 
 inline fun <reified T : Any> Entity.hasComponent(): Boolean = hasComponent(T::class.java)
 
