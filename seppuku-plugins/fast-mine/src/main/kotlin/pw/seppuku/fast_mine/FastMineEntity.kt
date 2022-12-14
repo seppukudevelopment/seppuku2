@@ -5,9 +5,9 @@ import pw.seppuku.common_accessors.mixin.mixins.minecraft.client.network.IClient
 import pw.seppuku.common_systems.ecs.components.minecraft.client.network.ClientPlayerInteractionManagerUpdateBlockBreakingProgress
 import pw.seppuku.components.HumanIdentifier
 import pw.seppuku.components.Toggle
-import pw.seppuku.components.onRelease
 import pw.seppuku.ecs.Component
 import pw.seppuku.ecs.Entity
+import pw.seppuku.keybind_dispatcher.ecs.components.onRelease
 import pw.seppuku.settings.config.ConfigFactory
 import pw.seppuku.settings.config.setting
 
@@ -25,7 +25,7 @@ abstract class FastMineEntity(
   val toggle by config.setting("toggle", Toggle())
 
   @Component
-  val keybind by config.setting("keybind", onRelease(GLFW.GLFW_KEY_X, 0) {
+  val keybind by config.setting("keybind", onRelease(GLFW.GLFW_KEY_X) {
     toggle.state = !toggle.state
   })
 

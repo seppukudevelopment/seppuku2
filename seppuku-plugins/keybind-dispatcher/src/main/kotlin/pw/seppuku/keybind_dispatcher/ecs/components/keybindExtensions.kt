@@ -1,4 +1,4 @@
-package pw.seppuku.components
+package pw.seppuku.keybind_dispatcher.ecs.components
 
 fun onRelease(
   key: Int,

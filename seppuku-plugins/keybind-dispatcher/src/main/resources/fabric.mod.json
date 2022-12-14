@@ -1,0 +1,15 @@
+{
+  "schemaVersion" : 1,
+  "id" : "keybind-dispatcher",
+  "name" : "Keybind dispatcher",
+  "version" : "${version}",
+  "environment" : "client",
+  "entrypoints" : {},
+  "mixins" : [
+    "keybind-dispatcher.mixins.json"
+  ],
+  "depends" : {
+    "minecraft" : "1.19.x",
+    "java" : ">=17"
+  }
+}

@@ -48,6 +48,7 @@ include(
   "seppuku-plugins:auto-tool",
   "seppuku-plugins:fast-mine",
   "seppuku-plugins:heads-up-display",
+  "seppuku-plugins:keybind-dispatcher",
   "seppuku-plugins:no-fall",
   "seppuku-plugins:speed",
   "seppuku-plugins:sprint",
