@@ -9,19 +9,19 @@ import pw.seppuku.ecs.findComponentOrNull
 import pw.seppuku.ecs.systems.ArchetypeSystem
 
 class ClientPlayerInteractionManagerAttackBlockSystem :
-    ArchetypeSystem<ClientPlayerInteractionManagerAttackBlockCallback>(
-        archetype(
-            ClientPlayerInteractionManagerAttackBlock::class
-        )
-    ) {
-    override val process: ClientPlayerInteractionManagerAttackBlockCallback = { blockPos, direction ->
-        val clientPlayerInteractionManager = this
+  ArchetypeSystem<ClientPlayerInteractionManagerAttackBlockCallback>(
+    archetype(
+      ClientPlayerInteractionManagerAttackBlock::class
+    )
+  ) {
+  override val process: ClientPlayerInteractionManagerAttackBlockCallback = { blockPos, direction ->
+    val clientPlayerInteractionManager = this
 
-        forEach {
-            if (it.findComponentOrNull<Toggle>()?.state != false) {
-                it.findComponent<ClientPlayerInteractionManagerAttackBlock>()
-                    .callback(clientPlayerInteractionManager, blockPos, direction)
-            }
-        }
+    forEach {
+      if (it.findComponentOrNull<Toggle>()?.state != false) {
+        it.findComponent<ClientPlayerInteractionManagerAttackBlock>()
+          .callback(clientPlayerInteractionManager, blockPos, direction)
+      }
     }
+  }
 }

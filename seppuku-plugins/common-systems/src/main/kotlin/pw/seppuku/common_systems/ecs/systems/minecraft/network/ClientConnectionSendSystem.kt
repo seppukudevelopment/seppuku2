@@ -7,13 +7,13 @@ import pw.seppuku.ecs.findComponentOrNull
 import pw.seppuku.ecs.systems.ArchetypeSystem
 
 class ClientConnectionSendSystem : ArchetypeSystem<ClientConnectionSendCallback>(
-    archetype(ClientConnectionSend::class)
+  archetype(ClientConnectionSend::class)
 ) {
-    override val process: ClientConnectionSendCallback = { packet ->
-        forEach {
-            if (it.findComponentOrNull<Toggle>()?.state != false) {
-                it.findComponent<ClientConnectionSend>().callback(this, packet)
-            }
-        }
+  override val process: ClientConnectionSendCallback = { packet ->
+    forEach {
+      if (it.findComponentOrNull<Toggle>()?.state != false) {
+        it.findComponent<ClientConnectionSend>().callback(this, packet)
+      }
     }
+  }
 }

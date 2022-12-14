@@ -7,15 +7,15 @@ import org.spongepowered.asm.mixin.gen.Accessor;
 @Mixin(ClientPlayerInteractionManager.class)
 public interface IClientPlayerInteractionManagerMixin {
 
-    @Accessor("currentBreakingProgress")
-    float getCurrentBreakingProgress();
+  @Accessor("currentBreakingProgress")
+  float getCurrentBreakingProgress();
 
-    @Accessor("currentBreakingProgress")
-    void setCurrentBreakingProgress(final float currentBreakingProgress);
+  @Accessor("currentBreakingProgress")
+  void setCurrentBreakingProgress(final float currentBreakingProgress);
 
-    @Accessor("blockBreakingCooldown")
-    int getBlockBreakingCooldown();
+  @Accessor("blockBreakingCooldown")
+  int getBlockBreakingCooldown();
 
-    @Accessor("blockBreakingCooldown")
-    void setBlockBreakingCooldown(final int blockBreakingCooldown);
+  @Accessor("blockBreakingCooldown")
+  void setBlockBreakingCooldown(final int blockBreakingCooldown);
 }

@@ -11,18 +11,18 @@ import net.bytebuddy.jar.asm.ClassWriter
 import net.bytebuddy.pool.TypePool
 
 internal object RecomputeMaxesVisitor : AsmVisitorWrapper {
-    override fun mergeWriter(flags: Int): Int = flags or ClassWriter.COMPUTE_MAXS
+  override fun mergeWriter(flags: Int): Int = flags or ClassWriter.COMPUTE_MAXS
 
-    override fun mergeReader(flags: Int): Int = flags
+  override fun mergeReader(flags: Int): Int = flags
 
-    override fun wrap(
-        instrumentedType: TypeDescription,
-        classVisitor: ClassVisitor,
-        implementationContext: Implementation.Context,
-        typePool: TypePool,
-        fields: FieldList<FieldDescription.InDefinedShape>,
-        methods: MethodList<*>,
-        writerFlags: Int,
-        readerFlags: Int
-    ): ClassVisitor = classVisitor
+  override fun wrap(
+    instrumentedType: TypeDescription,
+    classVisitor: ClassVisitor,
+    implementationContext: Implementation.Context,
+    typePool: TypePool,
+    fields: FieldList<FieldDescription.InDefinedShape>,
+    methods: MethodList<*>,
+    writerFlags: Int,
+    readerFlags: Int
+  ): ClassVisitor = classVisitor
 }

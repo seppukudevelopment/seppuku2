@@ -1,15 +1,15 @@
 {
-  "schemaVersion": 1,
-  "id": "common-systems",
-  "name": "Common systems",
-  "version": "${version}",
-  "environment": "client",
-  "entrypoints": {},
-  "mixins": [
+  "schemaVersion" : 1,
+  "id" : "common-systems",
+  "name" : "Common systems",
+  "version" : "${version}",
+  "environment" : "client",
+  "entrypoints" : {},
+  "mixins" : [
     "common-systems.mixins.json"
   ],
-  "depends": {
-    "minecraft": "1.19.x",
-    "java": ">=17"
+  "depends" : {
+    "minecraft" : "1.19.x",
+    "java" : ">=17"
   }
 }

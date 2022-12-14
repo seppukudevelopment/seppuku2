@@ -1,15 +1,15 @@
 {
-  "schemaVersion": 1,
-  "id": "common-accessors",
-  "name": "Common accessors",
-  "version": "${version}",
-  "environment": "client",
-  "entrypoints": {},
-  "mixins": [
+  "schemaVersion" : 1,
+  "id" : "common-accessors",
+  "name" : "Common accessors",
+  "version" : "${version}",
+  "environment" : "client",
+  "entrypoints" : {},
+  "mixins" : [
     "common-accessors.mixins.json"
   ],
-  "depends": {
-    "minecraft": "1.19.x",
-    "java": ">=17"
+  "depends" : {
+    "minecraft" : "1.19.x",
+    "java" : ">=17"
   }
 }

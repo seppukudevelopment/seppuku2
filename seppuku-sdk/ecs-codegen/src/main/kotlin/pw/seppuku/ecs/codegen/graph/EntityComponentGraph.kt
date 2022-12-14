@@ -14,24 +14,24 @@ import kotlin.reflect.jvm.jvmErasure
 internal typealias EntityComponentGraph = List<EntityComponent>
 
 internal fun <T : Entity> buildEntityComponentGraph(entityClass: KClass<T>): EntityComponentGraph =
-    buildEntityComponentGraphNoSuper(entityClass) +
-            entityClass.allSuperclasses
-                .map { buildEntityComponentGraphNoSuper(it) }
-                .flatten()
+  buildEntityComponentGraphNoSuper(entityClass) +
+    entityClass.allSuperclasses
+      .map { buildEntityComponentGraphNoSuper(it) }
+      .flatten()
 
 private fun buildEntityComponentGraphNoSuper(entityClass: KClass<*>): EntityComponentGraph =
-    entityClass
-        .memberProperties
-        .filter { it.javaField?.declaringClass == entityClass.java }
-        .filter(::hasComponentAnnotation)
-        .mapNotNull {
-            EntityComponent(
-                it.returnType.jvmErasure,
-                entityClass,
-                it.javaField?.name ?: return@mapNotNull null,
-                it.javaGetter?.name ?: return@mapNotNull null
-            )
-        }
+  entityClass
+    .memberProperties
+    .filter { it.javaField?.declaringClass == entityClass.java }
+    .filter(::hasComponentAnnotation)
+    .mapNotNull {
+      EntityComponent(
+        it.returnType.jvmErasure,
+        entityClass,
+        it.javaField?.name ?: return@mapNotNull null,
+        it.javaGetter?.name ?: return@mapNotNull null
+      )
+    }
 
 private fun hasComponentAnnotation(property: KProperty1<*, *>): Boolean =
-    property.hasAnnotation<Component>() or property.getter.hasAnnotation<Component>()
+  property.hasAnnotation<Component>() or property.getter.hasAnnotation<Component>()

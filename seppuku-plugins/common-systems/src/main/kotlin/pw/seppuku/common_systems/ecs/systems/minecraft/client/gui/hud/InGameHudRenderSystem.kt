@@ -9,11 +9,11 @@ import pw.seppuku.ecs.findComponentOrNull
 import pw.seppuku.ecs.systems.ArchetypeSystem
 
 class InGameHudRenderSystem : ArchetypeSystem<InGameHudRenderCallback>(archetype(InGameHudRender::class)) {
-    override val process: InGameHudRenderCallback = { matrices, tickDelta ->
-        forEach {
-            if (it.findComponentOrNull<Toggle>()?.state != false) {
-                it.findComponent<InGameHudRender>().callback(this, matrices, tickDelta)
-            }
-        }
+  override val process: InGameHudRenderCallback = { matrices, tickDelta ->
+    forEach {
+      if (it.findComponentOrNull<Toggle>()?.state != false) {
+        it.findComponent<InGameHudRender>().callback(this, matrices, tickDelta)
+      }
     }
+  }
 }

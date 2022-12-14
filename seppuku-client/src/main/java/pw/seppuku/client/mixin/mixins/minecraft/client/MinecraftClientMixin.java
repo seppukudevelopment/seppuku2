@@ -13,8 +13,11 @@ import pw.seppuku.plugin.mixin.ActualThis;
 @Mixin(MinecraftClient.class)
 public abstract class MinecraftClientMixin implements ActualThis<MinecraftClient> {
 
-    @Inject(method = "<init>", at = @At("TAIL"))
-    private void onInitTail(final RunArgs runArgs, final CallbackInfo callback) {
-        Seppuku.INSTANCE.getEngine().findSystem(MinecraftClientInitEarlySystem.class).getProcess().invoke(actualThis(), runArgs);
-    }
+  @Inject(method = "<init>", at = @At("TAIL"))
+  private void onInitTail(final RunArgs runArgs, final CallbackInfo callback) {
+    Seppuku.INSTANCE.getEngine()
+        .findSystem(MinecraftClientInitEarlySystem.class)
+        .getProcess()
+        .invoke(actualThis(), runArgs);
+  }
 }

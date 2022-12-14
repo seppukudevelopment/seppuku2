@@ -1,20 +1,20 @@
 plugins {
-    alias(mainLibs.plugins.kotlin.jvm)
+  alias(mainLibs.plugins.kotlin.jvm)
 }
 
 dependencies {
-    mainLibs {
-        implementation(kotlin.stdlib)
-        implementation(kotlin.reflect)
-    }
+  mainLibs {
+    implementation(kotlin.stdlib)
+    implementation(kotlin.reflect)
+  }
 
-    testLibs {
-        testImplementation(kotlin.test)
-    }
+  testLibs {
+    testImplementation(kotlin.test)
+  }
 }
 
 tasks {
-    test {
-        useJUnitPlatform()
-    }
+  test {
+    useJUnitPlatform()
+  }
 }

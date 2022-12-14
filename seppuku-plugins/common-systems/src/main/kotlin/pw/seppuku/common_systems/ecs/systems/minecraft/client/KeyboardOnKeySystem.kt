@@ -9,13 +9,14 @@ import pw.seppuku.ecs.findComponentOrNull
 import pw.seppuku.ecs.systems.ArchetypeSystem
 
 class KeyboardOnKeySystem : ArchetypeSystem<KeyboardOnKeyCallback>(archetype(KeyboardOnKey::class)) {
-    override val process: KeyboardOnKeyCallback = { window, key, scanCode, action, modifiers ->
-        val keyboard = this
+  override val process: KeyboardOnKeyCallback = { window, key, scanCode, action, modifiers ->
+    val keyboard = this
 
-        forEach {
-            if (it.findComponentOrNull<Toggle>()?.state != false) {
-                it.findComponent<KeyboardOnKey>().callback(keyboard, window, key, scanCode, action, modifiers)
-            }
-        }
+    forEach {
+      if (it.findComponentOrNull<Toggle>()?.state != false) {
+        it.findComponent<KeyboardOnKey>()
+          .callback(keyboard, window, key, scanCode, action, modifiers)
+      }
     }
+  }
 }

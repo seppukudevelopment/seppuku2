@@ -1,7 +1,21 @@
 package pw.seppuku.ecs.codegen.dsl
 
 import net.bytebuddy.jar.asm.MethodVisitor
-import net.bytebuddy.jar.asm.Opcodes.*
+import net.bytebuddy.jar.asm.Opcodes.D2F
+import net.bytebuddy.jar.asm.Opcodes.D2I
+import net.bytebuddy.jar.asm.Opcodes.D2L
+import net.bytebuddy.jar.asm.Opcodes.F2D
+import net.bytebuddy.jar.asm.Opcodes.F2I
+import net.bytebuddy.jar.asm.Opcodes.F2L
+import net.bytebuddy.jar.asm.Opcodes.I2B
+import net.bytebuddy.jar.asm.Opcodes.I2C
+import net.bytebuddy.jar.asm.Opcodes.I2D
+import net.bytebuddy.jar.asm.Opcodes.I2F
+import net.bytebuddy.jar.asm.Opcodes.I2L
+import net.bytebuddy.jar.asm.Opcodes.I2S
+import net.bytebuddy.jar.asm.Opcodes.L2D
+import net.bytebuddy.jar.asm.Opcodes.L2F
+import net.bytebuddy.jar.asm.Opcodes.L2I
 
 internal fun MethodVisitor.d2i() = visitInsn(D2I)
 internal fun MethodVisitor.i2d() = visitInsn(I2D)

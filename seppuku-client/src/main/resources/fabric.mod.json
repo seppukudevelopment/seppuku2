@@ -1,16 +1,16 @@
 {
-  "schemaVersion": 1,
-  "id": "seppuku-client",
-  "name": "Seppuku client",
-  "version": "${version}",
-  "environment": "client",
-  "entrypoints": {},
-  "mixins": [
+  "schemaVersion" : 1,
+  "id" : "seppuku-client",
+  "name" : "Seppuku client",
+  "version" : "${version}",
+  "environment" : "client",
+  "entrypoints" : {},
+  "mixins" : [
     "seppuku-client.mixins.json"
   ],
-  "depends": {
-    "minecraft": "1.19.x",
-    "java": ">=17",
-    "fabric-language-kotlin": ">=1.8.7+kotlin.1.7.22"
+  "depends" : {
+    "minecraft" : "1.19.x",
+    "java" : ">=17",
+    "fabric-language-kotlin" : ">=1.8.7+kotlin.1.7.22"
   }
 }

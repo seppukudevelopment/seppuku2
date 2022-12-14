@@ -9,15 +9,15 @@ import pw.seppuku.ecs.findComponentOrNull
 import pw.seppuku.ecs.systems.ArchetypeSystem
 
 internal class MinecraftClientInitEarlySystem :
-    ArchetypeSystem<MinecraftClientInitEarlyCallback>(archetype(MinecraftClientInitEarly::class)) {
+  ArchetypeSystem<MinecraftClientInitEarlyCallback>(archetype(MinecraftClientInitEarly::class)) {
 
-    override val process: MinecraftClientInitEarlyCallback = { runArgs ->
-        val minecraftClient = this
+  override val process: MinecraftClientInitEarlyCallback = { runArgs ->
+    val minecraftClient = this
 
-        forEach {
-            if (it.findComponentOrNull<Toggle>()?.state != false) {
-                it.findComponent<MinecraftClientInitEarly>().callback(minecraftClient, runArgs)
-            }
-        }
+    forEach {
+      if (it.findComponentOrNull<Toggle>()?.state != false) {
+        it.findComponent<MinecraftClientInitEarly>().callback(minecraftClient, runArgs)
+      }
     }
+  }
 }

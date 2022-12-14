@@ -13,15 +13,24 @@ import pw.seppuku.common_systems.ecs.systems.minecraft.client.network.ClientPlay
 import pw.seppuku.plugin.mixin.ActualThis;
 
 @Mixin(ClientPlayerInteractionManager.class)
-public abstract class ClientPlayerInteractionManagerMixin implements ActualThis<ClientPlayerInteractionManager> {
+public abstract class ClientPlayerInteractionManagerMixin
+    implements ActualThis<ClientPlayerInteractionManager> {
 
-    @Inject(method = "attackBlock", at = @At("HEAD"))
-    private void onAttackBlockHead(final BlockPos blockPos, final Direction direction, final CallbackInfoReturnable<Boolean> callback) {
-        Seppuku.INSTANCE.getEngine().findSystem(ClientPlayerInteractionManagerAttackBlockSystem.class).getProcess().invoke(actualThis(), blockPos, direction);
-    }
+  @Inject(method = "attackBlock", at = @At("HEAD"))
+  private void onAttackBlockHead(final BlockPos blockPos, final Direction direction,
+      final CallbackInfoReturnable<Boolean> callback) {
+    Seppuku.INSTANCE.getEngine()
+        .findSystem(ClientPlayerInteractionManagerAttackBlockSystem.class)
+        .getProcess()
+        .invoke(actualThis(), blockPos, direction);
+  }
 
-    @Inject(method = "updateBlockBreakingProgress", at = @At("HEAD"))
-    private void onUpdateBlockBreakingProgressHead(final BlockPos blockPos, final Direction direction, final CallbackInfoReturnable<Boolean> callback) {
-        Seppuku.INSTANCE.getEngine().findSystem(ClientPlayerInteractionManagerUpdateBlockBreakingProgressSystem.class).getProcess().invoke(actualThis(), blockPos, direction);
-    }
+  @Inject(method = "updateBlockBreakingProgress", at = @At("HEAD"))
+  private void onUpdateBlockBreakingProgressHead(final BlockPos blockPos, final Direction direction,
+      final CallbackInfoReturnable<Boolean> callback) {
+    Seppuku.INSTANCE.getEngine()
+        .findSystem(ClientPlayerInteractionManagerUpdateBlockBreakingProgressSystem.class)
+        .getProcess()
+        .invoke(actualThis(), blockPos, direction);
+  }
 }

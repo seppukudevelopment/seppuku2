@@ -9,13 +9,13 @@ import pw.seppuku.ecs.findComponentOrNull
 import pw.seppuku.ecs.systems.ArchetypeSystem
 
 internal class MixinOnLoadSystem : ArchetypeSystem<MixinOnLoadCallback>(
-    archetype(MixinOnLoad::class)
+  archetype(MixinOnLoad::class)
 ) {
-    override val process: MixinOnLoadCallback = { mixinPackage ->
-        forEach {
-            if (it.findComponentOrNull<Toggle>()?.state != false) {
-                it.findComponent<MixinOnLoad>().callback(this, mixinPackage)
-            }
-        }
+  override val process: MixinOnLoadCallback = { mixinPackage ->
+    forEach {
+      if (it.findComponentOrNull<Toggle>()?.state != false) {
+        it.findComponent<MixinOnLoad>().callback(this, mixinPackage)
+      }
     }
+  }
 }

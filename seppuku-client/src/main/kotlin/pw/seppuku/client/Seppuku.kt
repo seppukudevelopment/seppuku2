@@ -19,32 +19,32 @@ import java.io.File
 
 object Seppuku {
 
-    private val dependencyInjector = SimpleDependencyInjector().apply {
-        bind(DependencyInjector::class to DependencyProvider.singleton(this))
-        bind(EntityCodeGenerator::class to DependencyProvider.singleton(EntityCodeGenerator(File("seppuku/codegen/"))))
-        bind(ConfigFactory::class to DependencyProvider.singleton(SeppukuConfigFactory()))
-        bind(Engine::class to DependencyProvider.singleton(SeppukuEngine()))
-    }
+  private val dependencyInjector = SimpleDependencyInjector().apply {
+    bind(DependencyInjector::class to DependencyProvider.singleton(this))
+    bind(EntityCodeGenerator::class to DependencyProvider.singleton(EntityCodeGenerator(File("seppuku/codegen/"))))
+    bind(ConfigFactory::class to DependencyProvider.singleton(SeppukuConfigFactory()))
+    bind(Engine::class to DependencyProvider.singleton(SeppukuEngine()))
+  }
 
-    private val entityCodeGenerator: EntityCodeGenerator by lazy { dependencyInjector.get() }
+  private val entityCodeGenerator: EntityCodeGenerator by lazy { dependencyInjector.get() }
 
-    val engine: Engine by lazy { dependencyInjector.get() }
+  val engine: Engine by lazy { dependencyInjector.get() }
 
-    init {
-        createAndAddSystemToEngine<MixinOnLoadSystem>()
-        createAndAddSystemToEngine<MinecraftClientInitEarlySystem>()
+  init {
+    createAndAddSystemToEngine<MixinOnLoadSystem>()
+    createAndAddSystemToEngine<MinecraftClientInitEarlySystem>()
 
-        generateImplementationCreateAndAddEntityToEngine<PluginLoaderEntity>()
-    }
+    generateImplementationCreateAndAddEntityToEngine<PluginLoaderEntity>()
+  }
 
-    private inline fun <reified T : System<*>> createAndAddSystemToEngine() {
-        val system = dependencyInjector.create<T>()
-        engine.addSystem(system)
-    }
+  private inline fun <reified T : System<*>> createAndAddSystemToEngine() {
+    val system = dependencyInjector.create<T>()
+    engine.addSystem(system)
+  }
 
-    private inline fun <reified T : Entity> generateImplementationCreateAndAddEntityToEngine() {
-        val entityImplementation = entityCodeGenerator.generateImplementationClass(T::class)
-        val entity = dependencyInjector.create(entityImplementation)
-        engine.addEntity(entity)
-    }
+  private inline fun <reified T : Entity> generateImplementationCreateAndAddEntityToEngine() {
+    val entityImplementation = entityCodeGenerator.generateImplementationClass(T::class)
+    val entity = dependencyInjector.create(entityImplementation)
+    engine.addEntity(entity)
+  }
 }

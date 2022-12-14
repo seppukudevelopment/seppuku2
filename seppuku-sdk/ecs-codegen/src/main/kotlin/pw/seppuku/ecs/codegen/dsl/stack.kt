@@ -1,7 +1,15 @@
 package pw.seppuku.ecs.codegen.dsl
 
 import net.bytebuddy.jar.asm.MethodVisitor
-import net.bytebuddy.jar.asm.Opcodes.*
+import net.bytebuddy.jar.asm.Opcodes.DUP
+import net.bytebuddy.jar.asm.Opcodes.DUP2
+import net.bytebuddy.jar.asm.Opcodes.DUP2_X1
+import net.bytebuddy.jar.asm.Opcodes.DUP2_X2
+import net.bytebuddy.jar.asm.Opcodes.DUP_X1
+import net.bytebuddy.jar.asm.Opcodes.DUP_X2
+import net.bytebuddy.jar.asm.Opcodes.POP
+import net.bytebuddy.jar.asm.Opcodes.POP2
+import net.bytebuddy.jar.asm.Opcodes.SWAP
 
 internal fun MethodVisitor.dup() = visitInsn(DUP)
 internal fun MethodVisitor.dup_x1() = visitInsn(DUP_X1)

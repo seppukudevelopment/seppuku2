@@ -13,30 +13,30 @@ import java.io.File
 import kotlin.reflect.KClass
 
 class EntityCodeGenerator(
-    private val generatedClassSavePath: File? = null,
-    private val classLoadingStrategy: ClassLoadingStrategy<ClassLoader> = ClassLoadingStrategy.Default.INJECTION
+  private val generatedClassSavePath: File? = null,
+  private val classLoadingStrategy: ClassLoadingStrategy<ClassLoader> = ClassLoadingStrategy.Default.INJECTION
 ) {
 
-    fun <T : Entity> generateImplementationClass(
-        entityClass: KClass<T>,
-        classLoader: ClassLoader = this::class.java.classLoader
-    ): KClass<out T> {
-        val entityComponentGraph = buildEntityComponentGraph(entityClass)
+  fun <T : Entity> generateImplementationClass(
+    entityClass: KClass<T>,
+    classLoader: ClassLoader = this::class.java.classLoader
+  ): KClass<out T> {
+    val entityComponentGraph = buildEntityComponentGraph(entityClass)
 
-        return ByteBuddy()
-            .subclass(entityClass.java)
-            .method(ElementMatchers.named("hasComponent"))
-            .intercept(EntityHasComponentImplementation(entityComponentGraph))
-            .method(ElementMatchers.named("findComponentOrNull"))
-            .intercept(EntityFindComponentOrNullImplementation(entityComponentGraph))
-            .visit(RecomputeFramesVisitor)
-            .visit(RecomputeMaxesVisitor)
-            .make().apply {
-                if (generatedClassSavePath != null)
-                    saveIn(generatedClassSavePath)
-            }
-            .load(classLoader, classLoadingStrategy)
-            .loaded
-            .kotlin
-    }
+    return ByteBuddy()
+      .subclass(entityClass.java)
+      .method(ElementMatchers.named("hasComponent"))
+      .intercept(EntityHasComponentImplementation(entityComponentGraph))
+      .method(ElementMatchers.named("findComponentOrNull"))
+      .intercept(EntityFindComponentOrNullImplementation(entityComponentGraph))
+      .visit(RecomputeFramesVisitor)
+      .visit(RecomputeMaxesVisitor)
+      .make().apply {
+        if (generatedClassSavePath != null)
+          saveIn(generatedClassSavePath)
+      }
+      .load(classLoader, classLoadingStrategy)
+      .loaded
+      .kotlin
+  }
 }

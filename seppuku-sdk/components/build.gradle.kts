@@ -1,9 +1,9 @@
 plugins {
-    alias(mainLibs.plugins.kotlin.jvm)
+  alias(mainLibs.plugins.kotlin.jvm)
 }
 
 dependencies {
-    mainLibs {
-        implementation(kotlin.stdlib)
-    }
+  mainLibs {
+    implementation(kotlin.stdlib)
+  }
 }

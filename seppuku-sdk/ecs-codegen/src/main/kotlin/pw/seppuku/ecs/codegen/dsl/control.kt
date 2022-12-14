@@ -2,7 +2,25 @@ package pw.seppuku.ecs.codegen.dsl
 
 import net.bytebuddy.jar.asm.Label
 import net.bytebuddy.jar.asm.MethodVisitor
-import net.bytebuddy.jar.asm.Opcodes.*
+import net.bytebuddy.jar.asm.Opcodes.GOTO
+import net.bytebuddy.jar.asm.Opcodes.IFEQ
+import net.bytebuddy.jar.asm.Opcodes.IFGE
+import net.bytebuddy.jar.asm.Opcodes.IFGT
+import net.bytebuddy.jar.asm.Opcodes.IFLE
+import net.bytebuddy.jar.asm.Opcodes.IFLT
+import net.bytebuddy.jar.asm.Opcodes.IFNE
+import net.bytebuddy.jar.asm.Opcodes.IFNONNULL
+import net.bytebuddy.jar.asm.Opcodes.IFNULL
+import net.bytebuddy.jar.asm.Opcodes.IF_ACMPEQ
+import net.bytebuddy.jar.asm.Opcodes.IF_ACMPNE
+import net.bytebuddy.jar.asm.Opcodes.IF_ICMPEQ
+import net.bytebuddy.jar.asm.Opcodes.IF_ICMPGE
+import net.bytebuddy.jar.asm.Opcodes.IF_ICMPGT
+import net.bytebuddy.jar.asm.Opcodes.IF_ICMPLE
+import net.bytebuddy.jar.asm.Opcodes.IF_ICMPLT
+import net.bytebuddy.jar.asm.Opcodes.IF_ICMPNE
+import net.bytebuddy.jar.asm.Opcodes.JSR
+import net.bytebuddy.jar.asm.Opcodes.RET
 
 internal fun MethodVisitor.label(label: Label) = visitLabel(label)
 

@@ -12,29 +12,29 @@ import pw.seppuku.settings.config.ConfigFactory
 import pw.seppuku.settings.config.setting
 
 abstract class FastMineEntity(
-    configFactory: ConfigFactory
+  configFactory: ConfigFactory
 ) : Entity {
 
-    @Component
-    val humanIdentifier = HumanIdentifier("fast_mine")
+  @Component
+  val humanIdentifier = HumanIdentifier("fast_mine")
 
-    @Component
-    val config = configFactory.create("fast_mine")
+  @Component
+  val config = configFactory.create("fast_mine")
 
-    @Component
-    val toggle by config.setting("toggle", Toggle())
+  @Component
+  val toggle by config.setting("toggle", Toggle())
 
-    @Component
-    val keybind by config.setting("keybind", onRelease(GLFW.GLFW_KEY_X, 0) {
-        toggle.state = !toggle.state
-    })
+  @Component
+  val keybind by config.setting("keybind", onRelease(GLFW.GLFW_KEY_X, 0) {
+    toggle.state = !toggle.state
+  })
 
-    private var speed by config.setting("speed", 0.1f)
+  private var speed by config.setting("speed", 0.1f)
 
-    @Component
-    val clientPlayerInteractionManagerUpdateBlockBreakingProgress =
-        ClientPlayerInteractionManagerUpdateBlockBreakingProgress { _, _ ->
-            this as IClientPlayerInteractionManagerMixin
-            currentBreakingProgress += speed
-        }
+  @Component
+  val clientPlayerInteractionManagerUpdateBlockBreakingProgress =
+    ClientPlayerInteractionManagerUpdateBlockBreakingProgress { _, _ ->
+      this as IClientPlayerInteractionManagerMixin
+      currentBreakingProgress += speed
+    }
 }

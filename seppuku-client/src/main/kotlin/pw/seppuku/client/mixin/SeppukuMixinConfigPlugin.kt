@@ -5,8 +5,8 @@ import pw.seppuku.client.ecs.systems.mixin.MixinOnLoadSystem
 import pw.seppuku.ecs.findSystem
 
 internal class SeppukuMixinConfigPlugin : AbstractMixinConfigPlugin() {
-    override fun onLoad(mixinPackage: String?) {
-        Seppuku.engine.findSystem<MixinOnLoadSystem>().process(this, mixinPackage)
-        super.onLoad(mixinPackage)
-    }
+  override fun onLoad(mixinPackage: String?) {
+    Seppuku.engine.findSystem<MixinOnLoadSystem>().process(this, mixinPackage)
+    super.onLoad(mixinPackage)
+  }
 }

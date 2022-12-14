@@ -13,8 +13,12 @@ import pw.seppuku.plugin.mixin.ActualThis;
 @Mixin(InGameHud.class)
 public abstract class InGameHudMixin implements ActualThis<InGameHud> {
 
-    @Inject(method = "render", at = @At("TAIL"))
-    private void onRenderTail(final MatrixStack matrices, final float tickDelta, final CallbackInfo callback) {
-        Seppuku.INSTANCE.getEngine().findSystem(InGameHudRenderSystem.class).getProcess().invoke(actualThis(), matrices, tickDelta);
-    }
+  @Inject(method = "render", at = @At("TAIL"))
+  private void onRenderTail(final MatrixStack matrices, final float tickDelta,
+      final CallbackInfo callback) {
+    Seppuku.INSTANCE.getEngine()
+        .findSystem(InGameHudRenderSystem.class)
+        .getProcess()
+        .invoke(actualThis(), matrices, tickDelta);
+  }
 }

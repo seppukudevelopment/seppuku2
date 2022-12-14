@@ -4,12 +4,12 @@ import java.util.*
 
 data class UniqueIdentifier(private val uniqueIdentifier: UUID) {
 
-    override fun equals(other: Any?) = when (other) {
-        is UUID -> other == uniqueIdentifier
-        else -> super.equals(other)
-    }
+  override fun equals(other: Any?) = when (other) {
+    is UUID -> other == uniqueIdentifier
+    else -> super.equals(other)
+  }
 
-    override fun hashCode() = uniqueIdentifier.hashCode()
+  override fun hashCode() = uniqueIdentifier.hashCode()
 
-    override fun toString() = uniqueIdentifier.toString()
+  override fun toString() = uniqueIdentifier.toString()
 }

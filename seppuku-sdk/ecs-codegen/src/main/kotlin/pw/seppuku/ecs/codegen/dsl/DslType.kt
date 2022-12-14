@@ -7,10 +7,10 @@ import kotlin.reflect.KClass
 internal typealias DslType = Any
 
 internal fun DslType.coerce(): Type = when (this) {
-    is Type -> this
-    is String -> Type.getObjectType(this)
-    is Class<*> -> Type.getType(this)
-    is KClass<*> -> Type.getType(this.java)
-    is TypeDescription -> Type.getType(this.descriptor)
-    else -> error("Could not coerce type '${this::class.simpleName}'")
+  is Type -> this
+  is String -> Type.getObjectType(this)
+  is Class<*> -> Type.getType(this)
+  is KClass<*> -> Type.getType(this.java)
+  is TypeDescription -> Type.getType(this.descriptor)
+  else -> error("Could not coerce type '${this::class.simpleName}'")
 }

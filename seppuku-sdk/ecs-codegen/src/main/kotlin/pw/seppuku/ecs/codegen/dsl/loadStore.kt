@@ -1,7 +1,46 @@
 package pw.seppuku.ecs.codegen.dsl
 
 import net.bytebuddy.jar.asm.MethodVisitor
-import net.bytebuddy.jar.asm.Opcodes.*
+import net.bytebuddy.jar.asm.Opcodes.AALOAD
+import net.bytebuddy.jar.asm.Opcodes.AASTORE
+import net.bytebuddy.jar.asm.Opcodes.ACONST_NULL
+import net.bytebuddy.jar.asm.Opcodes.ALOAD
+import net.bytebuddy.jar.asm.Opcodes.ASTORE
+import net.bytebuddy.jar.asm.Opcodes.BALOAD
+import net.bytebuddy.jar.asm.Opcodes.BASTORE
+import net.bytebuddy.jar.asm.Opcodes.BIPUSH
+import net.bytebuddy.jar.asm.Opcodes.CALOAD
+import net.bytebuddy.jar.asm.Opcodes.CASTORE
+import net.bytebuddy.jar.asm.Opcodes.DALOAD
+import net.bytebuddy.jar.asm.Opcodes.DASTORE
+import net.bytebuddy.jar.asm.Opcodes.DCONST_0
+import net.bytebuddy.jar.asm.Opcodes.DCONST_1
+import net.bytebuddy.jar.asm.Opcodes.DLOAD
+import net.bytebuddy.jar.asm.Opcodes.DSTORE
+import net.bytebuddy.jar.asm.Opcodes.FALOAD
+import net.bytebuddy.jar.asm.Opcodes.FASTORE
+import net.bytebuddy.jar.asm.Opcodes.FCONST_0
+import net.bytebuddy.jar.asm.Opcodes.FCONST_1
+import net.bytebuddy.jar.asm.Opcodes.FCONST_2
+import net.bytebuddy.jar.asm.Opcodes.FLOAD
+import net.bytebuddy.jar.asm.Opcodes.FSTORE
+import net.bytebuddy.jar.asm.Opcodes.IALOAD
+import net.bytebuddy.jar.asm.Opcodes.IASTORE
+import net.bytebuddy.jar.asm.Opcodes.ICONST_0
+import net.bytebuddy.jar.asm.Opcodes.ICONST_1
+import net.bytebuddy.jar.asm.Opcodes.ICONST_2
+import net.bytebuddy.jar.asm.Opcodes.ICONST_3
+import net.bytebuddy.jar.asm.Opcodes.ICONST_4
+import net.bytebuddy.jar.asm.Opcodes.ICONST_5
+import net.bytebuddy.jar.asm.Opcodes.ILOAD
+import net.bytebuddy.jar.asm.Opcodes.ISTORE
+import net.bytebuddy.jar.asm.Opcodes.LALOAD
+import net.bytebuddy.jar.asm.Opcodes.LASTORE
+import net.bytebuddy.jar.asm.Opcodes.LCONST_0
+import net.bytebuddy.jar.asm.Opcodes.LCONST_1
+import net.bytebuddy.jar.asm.Opcodes.LLOAD
+import net.bytebuddy.jar.asm.Opcodes.LSTORE
+import net.bytebuddy.jar.asm.Opcodes.SIPUSH
 
 internal fun MethodVisitor.aaload() = visitInsn(AALOAD)
 internal fun MethodVisitor.aastore() = visitInsn(AASTORE)

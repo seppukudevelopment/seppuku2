@@ -9,14 +9,14 @@ import pw.seppuku.ecs.findComponentOrNull
 import pw.seppuku.ecs.systems.ArchetypeSystem
 
 class ClientPlayerEntityTickSystem :
-    ArchetypeSystem<ClientPlayerEntityTickCallback>(archetype(ClientPlayerEntityTick::class)) {
-    override val process: ClientPlayerEntityTickCallback = {
-        val clientPlayerEntity = this
+  ArchetypeSystem<ClientPlayerEntityTickCallback>(archetype(ClientPlayerEntityTick::class)) {
+  override val process: ClientPlayerEntityTickCallback = {
+    val clientPlayerEntity = this
 
-        forEach {
-            if (it.findComponentOrNull<Toggle>()?.state != false) {
-                it.findComponent<ClientPlayerEntityTick>().callback(clientPlayerEntity)
-            }
-        }
+    forEach {
+      if (it.findComponentOrNull<Toggle>()?.state != false) {
+        it.findComponent<ClientPlayerEntityTick>().callback(clientPlayerEntity)
+      }
     }
+  }
 }

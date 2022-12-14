@@ -11,11 +11,12 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(ClientConnection.class)
 public abstract class ClientConnectionMixin {
 
-    @Inject(method = "handlePacket", at = @At("HEAD"))
-    private static <T extends PacketListener> void onHandlePacketHead(final Packet<T> packet, final PacketListener packetListener, final CallbackInfo callback) {
-    }
+  @Inject(method = "handlePacket", at = @At("HEAD"))
+  private static <T extends PacketListener> void onHandlePacketHead(final Packet<T> packet,
+      final PacketListener packetListener, final CallbackInfo callback) {
+  }
 
-    @Inject(method = "send", at = @At("HEAD"))
-    private void onSendHead(final Packet<?> packet, final CallbackInfo callback) {
-    }
+  @Inject(method = "send", at = @At("HEAD"))
+  private void onSendHead(final Packet<?> packet, final CallbackInfo callback) {
+  }
 }
