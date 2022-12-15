@@ -18,9 +18,9 @@ abstract class SpeedEntity(configFactory: ConfigFactory) : Entity {
 
   @Component val toggle by config.setting("toggle", Toggle())
 
-  @Component val keybind = onRelease(GLFW.GLFW_KEY_V) {
+  @Component val keybind by config.setting("keybind", onRelease(GLFW.GLFW_KEY_V) {
     toggle.state = !toggle.state
-  }
+  })
 
   private var factor: Float by config.setting("factor", 0.5f)
 

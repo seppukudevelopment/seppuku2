@@ -23,9 +23,9 @@ abstract class SprintEntity(
     minecraftClient.options.sprintKey.isPressed = this
   })
 
-  @Component val keybind = onRelease(GLFW.GLFW_KEY_B) {
+  @Component val keybind by config.setting("keybind", onRelease(GLFW.GLFW_KEY_B) {
     toggle.state = !toggle.state
-  }
+  })
 
   @Component val clientPlayerEntityTick = ClientPlayerEntityTick {
     minecraftClient.options.sprintKey.isPressed = true
