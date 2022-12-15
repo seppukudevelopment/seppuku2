@@ -24,9 +24,9 @@ abstract class AutoToolEntity(
 
   @Component val toggle by config.setting("toggle", Toggle())
 
-  @Component val keybind by config.setting("keybind", onRelease(GLFW.GLFW_KEY_Z) {
+  @Component val keybind = onRelease(GLFW.GLFW_KEY_Z) {
     toggle.state = !toggle.state
-  })
+  }
 
   @Component val clientPlayerInteractionManagerAttackBlock =
     ClientPlayerInteractionManagerAttackBlock { blockPos, _ ->

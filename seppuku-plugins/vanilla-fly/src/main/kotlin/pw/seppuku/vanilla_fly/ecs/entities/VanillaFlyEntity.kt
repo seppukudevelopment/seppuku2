@@ -28,9 +28,9 @@ abstract class VanillaFlyEntity(
     minecraftClient.player?.abilities?.flying = this
   })
 
-  @Component val keybind by config.setting("keybind", onRelease(GLFW.GLFW_KEY_N) {
+  @Component val keybind = onRelease(GLFW.GLFW_KEY_N) {
     toggle.state = !toggle.state
-  })
+  }
 
   @Component val clientPlayerEntityTick = ClientPlayerEntityTick {
     this.abilities.allowFlying = true

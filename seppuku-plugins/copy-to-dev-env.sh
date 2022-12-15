@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
 
-PLUGINS_PATH="../seppuku-client/run/seppuku/plugins/"
+PLUGINS_PATH="../seppuku-client/run/mods/"
 
 if [ ! -d "$PLUGINS_PATH" ] ; then
   echo "make dir '$PLUGINS_PATH'"

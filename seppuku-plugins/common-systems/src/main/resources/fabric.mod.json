@@ -10,6 +10,7 @@
   ],
   "depends" : {
     "minecraft" : "1.19.x",
-    "java" : ">=17"
+    "java" : ">=17",
+    "seppuku-client": "${version}"
   }
 }
