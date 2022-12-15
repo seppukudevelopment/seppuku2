@@ -50,6 +50,7 @@ include(
   "seppuku-plugins:heads-up-display",
   "seppuku-plugins:keybind-system",
   "seppuku-plugins:no-fall",
+  "seppuku-plugins:script-host",
   "seppuku-plugins:speed",
   "seppuku-plugins:sprint",
   "seppuku-plugins:vanilla-fly",
