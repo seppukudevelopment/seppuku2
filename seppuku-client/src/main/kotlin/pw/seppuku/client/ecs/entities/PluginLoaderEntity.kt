@@ -1,11 +1,8 @@
 package pw.seppuku.client.ecs.entities
 
+import net.fabricmc.loader.impl.launch.FabricLauncherBase
 import net.minecraft.client.MinecraftClient
-import org.spongepowered.asm.launch.GlobalProperties
-import org.spongepowered.asm.mixin.Mixins
-import org.spongepowered.asm.mixin.transformer.Config
 import pw.seppuku.client.ecs.components.minecraft.client.MinecraftClientInitEarly
-import pw.seppuku.client.ecs.components.mixin.MixinOnLoad
 import pw.seppuku.components.HumanIdentifier
 import pw.seppuku.di.DependencyInjector
 import pw.seppuku.di.DependencyProvider
@@ -14,11 +11,8 @@ import pw.seppuku.ecs.Engine
 import pw.seppuku.ecs.Entity
 import pw.seppuku.ecs.System
 import pw.seppuku.ecs.codegen.EntityCodeGenerator
-import java.net.URL
-import java.net.URLClassLoader
-import java.nio.file.*
-import java.nio.file.attribute.BasicFileAttributes
-import java.util.*
+import java.io.File
+import java.util.zip.ZipEntry
 import java.util.zip.ZipFile
 import kotlin.reflect.KClass
 
@@ -27,106 +21,57 @@ internal abstract class PluginLoaderEntity(
   private val entityCodeGenerator: EntityCodeGenerator,
   private val engine: Engine
 ) : Entity {
-
   @Component val humanIdentifier = HumanIdentifier("plugin_loader")
 
-  private val loadedPluginClasses = mutableListOf<Class<*>>()
-
-  private lateinit var knotClassLoader: ClassLoader
-
-  @Component val mixinOnLoad = MixinOnLoad {
-    knotClassLoader = Thread.currentThread().contextClassLoader
-
-    // Ghetto way of preventing ConcurrentModificationException,
-    // not sure if this breaks anything... I hope not.
-    GlobalProperties.put(MIXIN_CONFIGS_KEY, linkedSetOf<Config>())
-
-    getPluginPaths().forEach {
-      it.injectPluginResourcesIntoKnotClassLoader()
-      it.addPluginMixinConfigurationsToMixinConfigurations()
-    }
-  }
-
-  @Component val minecraftClientInitEarly = MinecraftClientInitEarly {
+  @Component val minecraftClientInitEarly = MinecraftClientInitEarly { _ ->
     dependencyInjector.bind(MinecraftClient::class to DependencyProvider.singleton(this))
 
-    getPluginPaths().forEach {
-      it.loadAndInjectPluginClassesIntoKnotClassLoader()
-    }
-
-    createAndAddPluginSystemsToEngine()
-    createAndAddPluginEntitiesToEngine()
+    val knotClassLoader = FabricLauncherBase.getLauncher().targetClassLoader
+    val pluginClasses = findPluginClasses(knotClassLoader)
+    pluginClasses.createAndAddSystemsToEngine()
+    pluginClasses.generateImplementationCreateAndAddEntitiesToEngine()
   }
 
-  @Suppress("UNCHECKED_CAST") private fun createAndAddPluginSystemsToEngine() {
-    loadedPluginClasses.filter { System::class.java.isAssignableFrom(it) }
-      .map { it.kotlin as KClass<out System<*>> }
-      .map { dependencyInjector.create(it) }
-      .forEach(engine::addSystem)
+  private fun findPluginClasses(classLoader: ClassLoader): List<Class<*>> =
+    File("mods").walkBottomUp()
+      .filter { it.isFile }
+      .filter { it.extension == "jar" || it.extension == "zip" }
+      .map { ZipFile(it) }
+      .filter { it.getEntry("seppuku.json") != null }
+      .map { it.entries().toList() }
+      .flatten()
+      .filter { it.isClass() }
+      .filter { it.shouldLoadClass() }
+      .map { it.loadClass(classLoader) }
+      .toList()
+
+  private fun List<Class<*>>.createAndAddSystemsToEngine() {
+    filter { it.isSystem() }.map { it.createSystem() }.forEach { engine.addSystem(it) }
   }
 
-  @Suppress("UNCHECKED_CAST") private fun createAndAddPluginEntitiesToEngine() {
-    loadedPluginClasses.filter { Entity::class.java.isAssignableFrom(it) }
-      .map { it.kotlin as KClass<out Entity> }
-      .map { entityCodeGenerator.generateImplementationClass(it, knotClassLoader) }
-      .map { dependencyInjector.create(it) }
-      .forEach(engine::addEntity)
+  private fun List<Class<*>>.generateImplementationCreateAndAddEntitiesToEngine() {
+    filter { it.isEntity() }.map { it.generateEntityImplementationClass() }
+      .map { it.createEntity() }
+      .forEach { engine.addEntity(it) }
   }
 
-  private fun getPluginPaths(): List<Path> {
-    val pluginPaths = mutableListOf<Path>()
+  private fun ZipEntry.isClass(): Boolean = name.endsWith(".class")
 
-    // Can't use Kotlin walkFileTree because Kotlin is not in the KnotClassLoader yet
-    Files.walkFileTree(Path.of("seppuku", "plugins"),
-      EnumSet.of(FileVisitOption.FOLLOW_LINKS),
-      1,
-      object : SimpleFileVisitor<Path>() {
-        override fun visitFile(
-          path: Path,
-          attrs: BasicFileAttributes
-        ): FileVisitResult {
-          pluginPaths.add(path)
-          return FileVisitResult.CONTINUE
-        }
-      })
+  private fun ZipEntry.shouldLoadClass(): Boolean = !name.removeSuffix(".class").endsWith("Mixin")
 
-    return pluginPaths
-  }
+  private fun ZipEntry.loadClass(classLoader: ClassLoader) =
+    classLoader.loadClass(name.removeSuffix(".class").replace("/", "."))
 
-  private fun Path.injectPluginResourcesIntoKnotClassLoader() {
-    val knotUrlLoader = knotClassLoader::class.java.getDeclaredField("urlLoader")
-      .apply { isAccessible = true }
-      .get(knotClassLoader)
+  private fun Class<*>.isSystem(): Boolean = System::class.java.isAssignableFrom(this)
 
-    knotUrlLoader::class.java.getDeclaredMethod("addURL", URL::class.java)
-      .apply { isAccessible = true }
-      .invoke(knotUrlLoader, toUri().toURL())
-  }
+  @Suppress("UNCHECKED_CAST") private fun Class<*>.createSystem(): System<*> =
+    dependencyInjector.create(this.kotlin as KClass<out System<*>>)
 
-  private fun Path.loadAndInjectPluginClassesIntoKnotClassLoader() {
-    val pluginZipFile = ZipFile(toFile())
+  private fun Class<*>.isEntity(): Boolean = Entity::class.java.isAssignableFrom(this)
 
-    val pluginClassLoader = URLClassLoader(arrayOf(toUri().toURL()), knotClassLoader)
-    val pluginClasses = pluginZipFile.entries().toList().filter { it.name.endsWith(".class") }
-      // Ghetto fix but it works for now, ideally read the class
-      // bytes and check for the Mixin annotation
-      .filterNot { it.name.contains("Mixin") }.map {
-        pluginClassLoader.loadClass(it.name.substring(0, it.name.length - 6).replace("/", "."))
-      }
+  @Suppress("UNCHECKED_CAST")
+  private fun Class<*>.generateEntityImplementationClass(): KClass<out Entity> =
+    entityCodeGenerator.generateImplementationClass(this.kotlin as KClass<out Entity>)
 
-    loadedPluginClasses.addAll(pluginClasses)
-  }
-
-  private fun Path.addPluginMixinConfigurationsToMixinConfigurations() {
-    val pluginZipFile = ZipFile(toFile())
-    pluginZipFile.entries().toList().filter { it.name.endsWith(".mixins.json") }.forEach {
-      Mixins.addConfiguration(it.name)
-    }
-  }
-
-  private companion object {
-    private val MIXIN_CONFIGS_KEY by lazy {
-      GlobalProperties.Keys.of("${GlobalProperties.Keys.CONFIGS}.queue")
-    }
-  }
+  private fun KClass<out Entity>.createEntity(): Entity = dependencyInjector.create(this)
 }
