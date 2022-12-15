@@ -44,6 +44,7 @@ tasks {
 
   shadowJar {
     configurations = listOf(project.configurations.shadow.get())
+    minimize()
     dependencies {
       exclude(dependency("org.jetbrains:.*"))
       exclude(dependency("org.jetbrains.kotlin:.*"))
