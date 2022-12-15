@@ -1,13 +1,12 @@
 plugins {
   alias(mainLibs.plugins.kotlin.jvm)
-  alias(mainLibs.plugins.shadow)
   alias(minecraftLibs.plugins.fabric.loom)
 }
 
 dependencies {
   mainLibs {
     implementation(byteBuddy)
-    shadow(byteBuddy)
+    include(byteBuddy)
   }
 
   minecraftLibs {
@@ -25,12 +24,12 @@ dependencies {
     implementation(seppukuSdk.plugin)
     implementation(seppukuSdk.settings)
 
-    shadow(seppukuSdk.components)
-    shadow(seppukuSdk.dependencyInjection)
-    shadow(seppukuSdk.ecs)
-    shadow(seppukuSdk.ecsCodegen)
-    shadow(seppukuSdk.plugin)
-    shadow(seppukuSdk.settings)
+    include(seppukuSdk.components)
+    include(seppukuSdk.dependencyInjection)
+    include(seppukuSdk.ecs)
+    include(seppukuSdk.ecsCodegen)
+    include(seppukuSdk.plugin)
+    include(seppukuSdk.settings)
   }
 }
 
@@ -40,21 +39,5 @@ tasks {
     filesMatching("fabric.mod.json") {
       expand(mapOf("version" to project.version))
     }
-  }
-
-  shadowJar {
-    configurations = listOf(project.configurations.shadow.get())
-    minimize()
-    dependencies {
-      exclude(dependency("org.jetbrains:.*"))
-      exclude(dependency("org.jetbrains.kotlin:.*"))
-      exclude(dependency("org.jetbrains.kotlinx:.*"))
-    }
-  }
-
-  remapJar {
-    dependsOn(shadowJar)
-    mustRunAfter(shadowJar)
-    inputFile.set(shadowJar.get().archiveFile)
   }
 }
