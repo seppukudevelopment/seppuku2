@@ -19,9 +19,9 @@ abstract class NoFallEntity(configFactory: ConfigFactory) : Entity {
 
   @Component val toggle by config.setting("toggle", Toggle())
 
-  @Component val keybind by config.setting("keybind", onRelease(GLFW.GLFW_KEY_C) {
+  @Component val keybind = onRelease(GLFW.GLFW_KEY_C) {
     toggle.state = !toggle.state
-  })
+  }
 
   @Component val clientConnectionSend = ClientConnectionSend { packet ->
     if (packet is PlayerMoveC2SPacket) {

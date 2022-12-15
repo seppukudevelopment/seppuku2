@@ -21,9 +21,9 @@ abstract class FastMineEntity(
 
   @Component val toggle by config.setting("toggle", Toggle())
 
-  @Component val keybind by config.setting("keybind", onRelease(GLFW.GLFW_KEY_X) {
+  @Component val keybind = onRelease(GLFW.GLFW_KEY_X) {
     toggle.state = !toggle.state
-  })
+  }
 
   private var speed by config.setting("speed", 0.1f)
 
