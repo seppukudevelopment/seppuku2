@@ -1,13 +1,9 @@
 package pw.seppuku.script_host
 
-import net.minecraft.client.MinecraftClient
+import pw.seppuku.ecs.Entity
 import java.io.File
 import java.nio.file.Path
-import kotlin.script.experimental.api.EvaluationResult
-import kotlin.script.experimental.api.ResultWithDiagnostics
-import kotlin.script.experimental.api.ScriptCompilationConfiguration
-import kotlin.script.experimental.api.SourceCode
-import kotlin.script.experimental.api.defaultImports
+import kotlin.script.experimental.api.*
 import kotlin.script.experimental.host.BasicScriptingHost
 import kotlin.script.experimental.host.toScriptSource
 import kotlin.script.experimental.jvm.dependenciesFromCurrentContext
@@ -19,7 +15,7 @@ import kotlin.script.templates.standard.SimpleScriptTemplate
 object SeppukuScriptHost {
   private val compilationConfiguration: ScriptCompilationConfiguration by lazy {
     createJvmCompilationConfigurationFromTemplate<SimpleScriptTemplate> {
-      defaultImports(MinecraftClient::class)
+      defaultImports(Entity::class)
       jvm {
         dependenciesFromCurrentContext(wholeClasspath = true)
       }
