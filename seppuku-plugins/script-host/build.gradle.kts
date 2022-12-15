@@ -10,31 +10,22 @@ dependencies {
     implementation(mainLibs.kotlin.scripting.jvm)
     implementation(mainLibs.kotlin.scripting.jvm.host)
 
-    implementation(byteBuddy)
-    shadow(byteBuddy)
+    shadow(mainLibs.kotlin.scripting.common)
+    shadow(mainLibs.kotlin.scripting.jvm)
+    shadow(mainLibs.kotlin.scripting.jvm.host)
   }
 
   minecraftLibs {
     minecraft(minecraft)
     mappings(fabric.yarn)
-    modImplementation(fabric.loader)
     modImplementation(fabric.language.kotlin)
   }
 
   projects {
-    implementation(seppukuSdk.components)
-    implementation(seppukuSdk.dependencyInjection)
-    implementation(seppukuSdk.ecs)
-    implementation(seppukuSdk.ecsCodegen)
-    implementation(seppukuSdk.plugin)
-    implementation(seppukuSdk.settings)
+    implementation(seppukuPlugins.commonSystems) { targetConfiguration = "namedElements" }
 
-    shadow(seppukuSdk.components)
-    shadow(seppukuSdk.dependencyInjection)
-    shadow(seppukuSdk.ecs)
-    shadow(seppukuSdk.ecsCodegen)
-    shadow(seppukuSdk.plugin)
-    shadow(seppukuSdk.settings)
+    implementation(seppukuSdk.components)
+    implementation(seppukuSdk.ecs)
   }
 }
 
@@ -48,11 +39,7 @@ tasks {
 
   shadowJar {
     configurations = listOf(project.configurations.shadow.get())
-    dependencies {
-      exclude(dependency("org.jetbrains:.*"))
-      exclude(dependency("org.jetbrains.kotlin:.*"))
-      exclude(dependency("org.jetbrains.kotlinx:.*"))
-    }
+    minimize()
   }
 
   remapJar {
