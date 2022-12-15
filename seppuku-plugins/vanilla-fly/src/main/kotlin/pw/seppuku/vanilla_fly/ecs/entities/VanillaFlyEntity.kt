@@ -34,26 +34,23 @@ abstract class VanillaFlyEntity(
     toggle.state = !toggle.state
   })
 
-  private var maxFloatingTicks by config.setting("max_ticks_in_air", 60)
-  private var fallSpeed by config.setting("fall_speed", 0.035)
+  private var maxFloatingTicks by config.setting("max_floating_ticks", 60)
+  private var fallSpeed by config.setting("fall_speed", 0.1)
 
   private var floatingTicks = 0
 
   @Component val clientPlayerEntityTick = ClientPlayerEntityTick {
     this.abilities.allowFlying = true
 
-    if (isOnGround || velocity.y <= MIN_MOTION_DIFF_BEFORE_FLOATING) {
+    if (isOnGround) {
       floatingTicks = 0
       return@ClientPlayerEntityTick
     }
 
-    if (maxFloatingTicks++ > fallSpeed) {
-      velocity.add(0.0, fallSpeed, 0.0)
+    floatingTicks++
+    if (floatingTicks > maxFloatingTicks) {
+      velocity.add(0.0, -fallSpeed, 0.0)
       floatingTicks = 0
     }
-  }
-
-  companion object {
-    private const val MIN_MOTION_DIFF_BEFORE_FLOATING = 0.033
   }
 }
