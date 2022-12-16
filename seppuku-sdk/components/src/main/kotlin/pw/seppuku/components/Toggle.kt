@@ -4,7 +4,7 @@ import java.io.Serializable
 
 data class Toggle(
   private val initialState: Boolean = false,
-  private val onStateChange: Boolean.() -> Unit = {}
+  @Transient private val onStateChange: Boolean.() -> Unit = {}
 ) : Serializable {
   var state: Boolean = initialState
     set(value) {

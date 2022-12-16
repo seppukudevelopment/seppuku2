@@ -8,7 +8,7 @@ import java.io.Serializable
 data class Keybind(
   val key: Int,
   val modifiers: Int,
-  val onAction: (KeybindAction) -> Unit,
+  @Transient val onAction: (KeybindAction) -> Unit,
 ) : Serializable {
 
   enum class KeybindAction {
