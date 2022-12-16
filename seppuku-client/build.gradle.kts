@@ -9,6 +9,7 @@ dependencies {
     implementation(mainLibs.kotlin.scripting.common)
     implementation(mainLibs.kotlin.scripting.jvm)
     implementation(mainLibs.kotlin.scripting.jvm.host)
+    implementation(mainLibs.kotlin.scripting.compiler.embeddable)
 
     implementation(byteBuddy)
     shadow(byteBuddy)

@@ -9,6 +9,7 @@ dependencies {
     implementation(mainLibs.kotlin.scripting.common)
     implementation(mainLibs.kotlin.scripting.jvm)
     implementation(mainLibs.kotlin.scripting.jvm.host)
+    implementation(mainLibs.kotlin.scripting.compiler.embeddable)
 
     shadow(mainLibs.kotlin.scripting.common)
     shadow(mainLibs.kotlin.scripting.jvm)
