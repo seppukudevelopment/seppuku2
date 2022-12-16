@@ -3,12 +3,19 @@ package pw.seppuku.client
 import pw.seppuku.client.ecs.engines.SeppukuEngine
 import pw.seppuku.client.ecs.entities.ConfigPersistenceEntity
 import pw.seppuku.client.ecs.entities.PluginLoaderEntity
+import pw.seppuku.client.ecs.systems.KeybindSystem
+import pw.seppuku.client.ecs.systems.minecraft.client.KeyboardOnKeySystem
 import pw.seppuku.client.ecs.systems.minecraft.client.MinecraftClientInitEarlySystem
-import pw.seppuku.client.ecs.systems.mixin.MixinOnLoadSystem
+import pw.seppuku.client.ecs.systems.minecraft.client.MinecraftClientInitSystem
+import pw.seppuku.client.ecs.systems.minecraft.client.hud.gui.InGameHudRenderSystem
+import pw.seppuku.client.ecs.systems.minecraft.client.network.ClientPlayerEntityTickSystem
+import pw.seppuku.client.ecs.systems.minecraft.client.network.ClientPlayerInteractionManagerAttackBlockSystem
+import pw.seppuku.client.ecs.systems.minecraft.client.network.ClientPlayerInteractionManagerUpdateBlockBreakingProgressSystem
+import pw.seppuku.client.ecs.systems.minecraft.network.ClientConnectionHandlePacketSystem
+import pw.seppuku.client.ecs.systems.minecraft.network.ClientConnectionSendSystem
 import pw.seppuku.client.settings.config.factories.SeppukuConfigFactory
 import pw.seppuku.di.DependencyInjector
 import pw.seppuku.di.DependencyProvider
-import pw.seppuku.di.create
 import pw.seppuku.di.get
 import pw.seppuku.di.injectors.SimpleDependencyInjector
 import pw.seppuku.ecs.Engine
@@ -17,6 +24,7 @@ import pw.seppuku.ecs.System
 import pw.seppuku.ecs.codegen.EntityCodeGenerator
 import pw.seppuku.settings.config.ConfigFactory
 import java.io.File
+import kotlin.reflect.KClass
 
 object Seppuku {
 
@@ -27,26 +35,53 @@ object Seppuku {
     bind(Engine::class to DependencyProvider.singleton(SeppukuEngine()))
   }
 
-  private val entityCodeGenerator: EntityCodeGenerator by lazy { dependencyInjector.get() }
-
   val engine: Engine by lazy { dependencyInjector.get() }
 
-  init {
-    createAndAddSystemToEngine<MixinOnLoadSystem>()
-    createAndAddSystemToEngine<MinecraftClientInitEarlySystem>()
+  private val entityCodeGenerator: EntityCodeGenerator by lazy { dependencyInjector.get() }
 
-    generateImplementationCreateAndAddEntityToEngine<PluginLoaderEntity>()
-    generateImplementationCreateAndAddEntityToEngine<ConfigPersistenceEntity>()
+  init {
+    createAndAddSystemsToEngine(
+      KeybindSystem::class,
+
+      // minecraft.client
+      KeyboardOnKeySystem::class,
+      MinecraftClientInitEarlySystem::class,
+      MinecraftClientInitSystem::class,
+
+      // minecraft.client.gui.hud
+      InGameHudRenderSystem::class,
+
+      // minecraft.client.network
+      ClientPlayerEntityTickSystem::class,
+      ClientPlayerInteractionManagerAttackBlockSystem::class,
+      ClientPlayerInteractionManagerUpdateBlockBreakingProgressSystem::class,
+
+      // minecraft.network
+      ClientConnectionHandlePacketSystem::class,
+      ClientConnectionSendSystem::class,
+    )
+
+    generateImplementationCreateAndAddEntitiesToEngine(
+      PluginLoaderEntity::class, ConfigPersistenceEntity::class
+    )
   }
 
-  private inline fun <reified T : System<*>> createAndAddSystemToEngine() {
-    val system = dependencyInjector.create<T>()
+  private fun createAndAddSystemsToEngine(vararg systemClasses: KClass<out System<*>>) {
+    systemClasses.forEach(this::createAndAddSystemToEngine)
+  }
+
+  private fun createAndAddSystemToEngine(systemClass: KClass<out System<*>>) {
+    val system = dependencyInjector.create(systemClass)
     engine.addSystem(system)
   }
 
-  private inline fun <reified T : Entity> generateImplementationCreateAndAddEntityToEngine() {
-    val entityImplementation = entityCodeGenerator.generateImplementationClass(T::class)
-    val entity = dependencyInjector.create(entityImplementation)
+  private fun generateImplementationCreateAndAddEntitiesToEngine(vararg entityClasses: KClass<out Entity>) {
+    entityClasses.forEach(this::generateImplementationCreateAndAddEntityToEngine)
+  }
+
+  private fun generateImplementationCreateAndAddEntityToEngine(entityClass: KClass<out Entity>) {
+    val entityImplementationClass = entityCodeGenerator.generateImplementationClass(entityClass)
+    val entity = dependencyInjector.create(entityImplementationClass)
     engine.addEntity(entity)
   }
 }

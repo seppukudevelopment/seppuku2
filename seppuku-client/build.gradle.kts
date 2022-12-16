@@ -5,7 +5,6 @@ plugins {
 
 dependencies {
   mainLibs {
-    implementation(byteBuddy)
     include(byteBuddy)
   }
 
@@ -17,12 +16,12 @@ dependencies {
   }
 
   projects {
-    implementation(seppukuSdk.components)
-    implementation(seppukuSdk.dependencyInjection)
-    implementation(seppukuSdk.ecs)
-    implementation(seppukuSdk.ecsCodegen)
-    implementation(seppukuSdk.plugin)
-    implementation(seppukuSdk.settings)
+    api(seppukuSdk.components)
+    api(seppukuSdk.dependencyInjection)
+    api(seppukuSdk.ecs)
+    api(seppukuSdk.ecsCodegen)
+    api(seppukuSdk.plugin)
+    api(seppukuSdk.settings)
 
     include(seppukuSdk.components)
     include(seppukuSdk.dependencyInjection)

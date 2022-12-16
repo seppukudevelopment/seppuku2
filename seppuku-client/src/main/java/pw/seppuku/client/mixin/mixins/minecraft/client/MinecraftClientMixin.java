@@ -8,15 +8,24 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import pw.seppuku.client.Seppuku;
 import pw.seppuku.client.ecs.systems.minecraft.client.MinecraftClientInitEarlySystem;
+import pw.seppuku.client.ecs.systems.minecraft.client.MinecraftClientInitSystem;
 import pw.seppuku.plugin.mixin.ActualThis;
 
 @Mixin(MinecraftClient.class) public abstract class MinecraftClientMixin
     implements ActualThis<MinecraftClient> {
 
   @Inject(method = "<init>", at = @At(value = "FIELD", target = "Lnet/minecraft/client/MinecraftClient;runDirectory:Ljava/io/File;", ordinal = 0))
-  private void onInitTail(final RunArgs runArgs, final CallbackInfo callback) {
+  private void onInitEarly(final RunArgs runArgs, final CallbackInfo callback) {
     Seppuku.INSTANCE.getEngine()
         .findSystem(MinecraftClientInitEarlySystem.class)
+        .getProcess()
+        .invoke(actualThis(), runArgs);
+  }
+
+  @Inject(method = "<init>", at = @At("TAIL"))
+  private void onInitTail(final RunArgs runArgs, final CallbackInfo callback) {
+    Seppuku.INSTANCE.getEngine()
+        .findSystem(MinecraftClientInitSystem.class)
         .getProcess()
         .invoke(actualThis(), runArgs);
   }

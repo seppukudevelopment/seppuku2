@@ -42,13 +42,9 @@ include(
   "seppuku-sdk:plugin",
   "seppuku-sdk:settings",
 
-  "seppuku-plugins:common-accessors",
-  "seppuku-plugins:common-systems",
-
   "seppuku-plugins:auto-tool",
   "seppuku-plugins:fast-mine",
   "seppuku-plugins:heads-up-display",
-  "seppuku-plugins:keybind-system",
   "seppuku-plugins:no-fall",
   "seppuku-plugins:speed",
   "seppuku-plugins:sprint",
