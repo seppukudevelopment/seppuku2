@@ -17,7 +17,7 @@ abstract class VanillaFlyEntity(
 ) : Entity {
   @Component val humanIdentifier = HumanIdentifier("vanilla_fly")
 
-  @Component val config = configFactory.create("sprint")
+  @Component val config = configFactory.create("vanilla_fly")
 
   @Component val toggle by config.setting("toggle", Toggle {
     floatingTicks = 0
