@@ -59,17 +59,21 @@ internal abstract class PluginLoaderEntity(
   }
 
   @Suppress("UNCHECKED_CAST") private fun createAndAddPluginSystemsToEngine() {
-    loadedPluginClasses.filter { System::class.java.isAssignableFrom(it) }
+    loadedPluginClasses.asSequence()
+      .filterNot { it.isInterface }
+      .filter { System::class.java.isAssignableFrom(it) }
       .map { it.kotlin as KClass<out System<*>> }
       .map { dependencyInjector.create(it) }
       .forEach(engine::addSystem)
   }
 
   @Suppress("UNCHECKED_CAST") private fun createAndAddPluginEntitiesToEngine() {
-    loadedPluginClasses.filter { Entity::class.java.isAssignableFrom(it) }
+    loadedPluginClasses.asSequence()
+      .filter { Entity::class.java.isAssignableFrom(it) }
       .map { it.kotlin as KClass<out Entity> }
       .map { entityCodeGenerator.generateImplementationClass(it, knotClassLoader) }
       .map { dependencyInjector.create(it) }
+      .toList()
       .forEach(engine::addEntity)
   }
 
