@@ -3,12 +3,13 @@ package pw.seppuku.client.ecs.components
 import pw.seppuku.client.ecs.components.Keybind.KeybindAction.HOLD
 import pw.seppuku.client.ecs.components.Keybind.KeybindAction.PRESS
 import pw.seppuku.client.ecs.components.Keybind.KeybindAction.RELEASE
+import java.io.Serializable
 
 data class Keybind(
   val key: Int,
   val modifiers: Int,
   val onAction: (KeybindAction) -> Unit,
-) {
+) : Serializable {
 
   enum class KeybindAction {
     RELEASE,
