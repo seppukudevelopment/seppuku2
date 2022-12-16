@@ -8,7 +8,7 @@ import pw.seppuku.components.HumanIdentifier
 import pw.seppuku.components.Toggle
 import pw.seppuku.ecs.Component
 import pw.seppuku.ecs.Entity
-import pw.seppuku.keybind_system.ecs.components.onRelease
+import pw.seppuku.client.ecs.components.onRelease
 import pw.seppuku.settings.config.ConfigFactory
 import pw.seppuku.settings.config.setting
 

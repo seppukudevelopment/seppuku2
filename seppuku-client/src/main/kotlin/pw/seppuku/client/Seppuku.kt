@@ -3,6 +3,7 @@ package pw.seppuku.client
 import pw.seppuku.client.ecs.engines.SeppukuEngine
 import pw.seppuku.client.ecs.entities.ConfigPersistenceEntity
 import pw.seppuku.client.ecs.entities.PluginLoaderEntity
+import pw.seppuku.client.ecs.systems.KeybindSystem
 import pw.seppuku.client.ecs.systems.minecraft.client.KeyboardOnKeySystem
 import pw.seppuku.client.ecs.systems.minecraft.client.MinecraftClientInitEarlySystem
 import pw.seppuku.client.ecs.systems.minecraft.client.MinecraftClientInitSystem
@@ -40,6 +41,8 @@ object Seppuku {
 
   init {
     createAndAddSystemsToEngine(
+      KeybindSystem::class,
+
       // minecraft.client
       KeyboardOnKeySystem::class,
       MinecraftClientInitEarlySystem::class,
