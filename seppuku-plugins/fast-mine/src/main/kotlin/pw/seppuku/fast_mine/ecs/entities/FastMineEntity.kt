@@ -1,8 +1,8 @@
 package pw.seppuku.fast_mine.ecs.entities
 
 import org.lwjgl.glfw.GLFW
-import pw.seppuku.common_accessors.mixin.mixins.minecraft.client.network.IClientPlayerInteractionManagerMixin
-import pw.seppuku.common_systems.ecs.components.minecraft.client.network.ClientPlayerInteractionManagerUpdateBlockBreakingProgress
+import pw.seppuku.client.ecs.components.minecraft.client.network.ClientPlayerInteractionManagerUpdateBlockBreakingProgress
+import pw.seppuku.client.mixin.mixins.minecraft.client.network.IClientPlayerInteractionManager
 import pw.seppuku.components.HumanIdentifier
 import pw.seppuku.components.Toggle
 import pw.seppuku.ecs.Component
@@ -29,7 +29,7 @@ abstract class FastMineEntity(
 
   @Component val clientPlayerInteractionManagerUpdateBlockBreakingProgress =
     ClientPlayerInteractionManagerUpdateBlockBreakingProgress { _, _ ->
-      this as IClientPlayerInteractionManagerMixin
+      this as IClientPlayerInteractionManager
       currentBreakingProgress += speed
     }
 }

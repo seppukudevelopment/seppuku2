@@ -1,7 +1,7 @@
 package pw.seppuku.heads_up_display.ecs.entities
 
 import net.minecraft.client.MinecraftClient
-import pw.seppuku.common_systems.ecs.components.minecraft.client.hud.gui.InGameHudRender
+import pw.seppuku.client.ecs.components.minecraft.client.hud.gui.InGameHudRender
 import pw.seppuku.components.HumanIdentifier
 import pw.seppuku.components.Toggle
 import pw.seppuku.ecs.Component

@@ -7,6 +7,13 @@
   },
   "package" : "pw.seppuku.client.mixin.mixins",
   "client" : [
-    "minecraft.client.MinecraftClientMixin"
+    "minecraft.client.KeyboardMixin",
+    "minecraft.client.MinecraftClientMixin",
+    "minecraft.client.gui.hud.InGameHudMixin",
+    "minecraft.client.network.ClientPlayerEntityMixin",
+    "minecraft.client.network.ClientPlayerInteractionManagerMixin",
+    "minecraft.client.network.IClientPlayerInteractionManager",
+    "minecraft.network.ClientConnectionMixin",
+    "minecraft.network.packet.c2s.play.IPlayerMoveC2SPacket"
   ]
 }

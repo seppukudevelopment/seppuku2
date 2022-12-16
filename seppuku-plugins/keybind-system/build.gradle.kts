@@ -12,11 +12,6 @@ dependencies {
 
   projects {
     implementation(seppukuClient)
-    implementation(seppukuPlugins.commonSystems) { targetConfiguration = "namedElements" }
-
-    implementation(seppukuSdk.components)
-    implementation(seppukuSdk.ecs)
-    implementation(seppukuSdk.plugin)
   }
 }
 

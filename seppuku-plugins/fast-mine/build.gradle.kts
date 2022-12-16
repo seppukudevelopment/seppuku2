@@ -11,13 +11,8 @@ dependencies {
   }
 
   projects {
-    implementation(seppukuPlugins.commonAccessors) { targetConfiguration = "namedElements" }
-    implementation(seppukuPlugins.commonSystems) { targetConfiguration = "namedElements" }
+    implementation(seppukuClient) { targetConfiguration = "namedElements" }
     implementation(seppukuPlugins.keybindSystem) { targetConfiguration = "namedElements" }
-
-    implementation(seppukuSdk.components)
-    implementation(seppukuSdk.ecs)
-    implementation(seppukuSdk.settings)
   }
 }
 

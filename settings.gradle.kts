@@ -42,9 +42,6 @@ include(
   "seppuku-sdk:plugin",
   "seppuku-sdk:settings",
 
-  "seppuku-plugins:common-accessors",
-  "seppuku-plugins:common-systems",
-
   "seppuku-plugins:auto-tool",
   "seppuku-plugins:fast-mine",
   "seppuku-plugins:heads-up-display",

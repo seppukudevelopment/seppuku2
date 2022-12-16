@@ -9,7 +9,7 @@ dependencies {
   mainLibs {
     implementation(kotlin.stdlib)
     implementation(kotlin.reflect)
-    implementation(byteBuddy)
+    api(byteBuddy)
   }
 
   projects {

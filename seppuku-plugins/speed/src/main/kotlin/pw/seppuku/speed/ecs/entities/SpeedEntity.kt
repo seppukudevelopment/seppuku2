@@ -2,7 +2,7 @@ package pw.seppuku.speed.ecs.entities
 
 import net.minecraft.util.math.Vec3d
 import org.lwjgl.glfw.GLFW
-import pw.seppuku.common_systems.ecs.components.minecraft.client.network.ClientPlayerEntityTick
+import pw.seppuku.client.ecs.components.minecraft.client.network.ClientPlayerEntityTick
 import pw.seppuku.components.HumanIdentifier
 import pw.seppuku.components.Toggle
 import pw.seppuku.ecs.Component
