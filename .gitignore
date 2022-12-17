@@ -1,10 +1,17 @@
 # IntelliJ
-**/out/
-**/build/
-**/.idea/
+**/.idea/shelf/
+**/.idea/misc.xml
+**/.idea/gradle.xml
+**/.idea/workspace.xml
+**/.idea/usage.statistics.xml
+**/.idea/dictionaries
 
 # Gradle
 **/.gradle/
+
+# Compiled files
+**/out/
+**/build/
 
 # Fabric
 **/run/
