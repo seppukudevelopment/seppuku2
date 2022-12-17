@@ -1,0 +1,71 @@
+/*
+ *     Copyright (C) 2022  Seppuku Development
+ *
+ *     This program is free software: you can redistribute it and/or modify
+ *     it under the terms of the GNU General Public License as published by
+ *     the Free Software Foundation, either version 3 of the License, or
+ *     (at your option) any later version.
+ *
+ *     This program is distributed in the hope that it will be useful,
+ *     but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *     GNU General Public License for more details.
+ *
+ *     You should have received a copy of the GNU General Public License
+ *     along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
+package pw.seppuku.auto_tool.ecs.entities
+
+import net.minecraft.block.BlockState
+import net.minecraft.client.MinecraftClient
+import net.minecraft.util.math.BlockPos
+import org.lwjgl.glfw.GLFW
+import pw.seppuku.client.ecs.components.minecraft.client.network.ClientPlayerInteractionManagerAttackBlock
+import pw.seppuku.components.HumanIdentifier
+import pw.seppuku.components.Toggle
+import pw.seppuku.ecs.Component
+import pw.seppuku.ecs.Entity
+import pw.seppuku.client.ecs.components.onRelease
+import pw.seppuku.settings.config.ConfigFactory
+import pw.seppuku.settings.config.setting
+
+abstract class AutoToolEntity(
+  configFactory: ConfigFactory,
+  private val minecraftClient: MinecraftClient
+) : Entity {
+
+  @Component val humanIdentifier = HumanIdentifier("auto_tool")
+
+  @Component val config = configFactory.create("auto_tool")
+
+  @Component val toggle by config.setting("toggle", Toggle())
+
+  @Component val keybind by config.setting("keybind", onRelease(GLFW.GLFW_KEY_Z) {
+    toggle.state = !toggle.state
+  })
+
+  @Component val clientPlayerInteractionManagerAttackBlock =
+    ClientPlayerInteractionManagerAttackBlock { blockPos, _ ->
+      val blockState = blockPos.getBlockState() ?: return@ClientPlayerInteractionManagerAttackBlock
+      val bestRatedSlot =
+        blockState.getBestRatedSlot() ?: return@ClientPlayerInteractionManagerAttackBlock
+      bestRatedSlot.selectSlot()
+    }
+
+  private fun BlockPos.getBlockState(): BlockState? =
+    this@AutoToolEntity.minecraftClient.world?.getBlockState(this)
+
+  private fun BlockState.getBestRatedSlot(): Int? = (0..9).maxByOrNull {
+    this.getSlotRating(it)
+  }
+
+  private fun BlockState.getSlotRating(index: Int): Float =
+    this@AutoToolEntity.minecraftClient.player?.inventory?.getStack(index)
+      ?.getMiningSpeedMultiplier(this) ?: 0f
+
+  private fun Int.selectSlot() {
+    val player = this@AutoToolEntity.minecraftClient.player ?: return
+    player.inventory.selectedSlot = this
+  }
+}

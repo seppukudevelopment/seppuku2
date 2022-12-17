@@ -1,0 +1,14 @@
+{
+  "schemaVersion" : 1,
+  "id" : "sprint",
+  "name" : "Sprint",
+  "version" : "${version}",
+  "environment" : "client",
+  "entrypoints" : {},
+  "mixins" : [],
+  "depends" : {
+    "minecraft" : "1.19.x",
+    "java" : ">=17",
+    "seppuku-client": "${version}"
+  }
+}

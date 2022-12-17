@@ -1,0 +1,22 @@
+name: Build and test projects
+
+on: [ push ]
+
+jobs:
+  build-and-test-projects:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout project sources
+        uses: actions/checkout@v3
+      - name: Setup Java
+        uses: actions/setup-java@v3
+        with:
+          distribution: temurin
+          java-version: 17
+          cache: gradle
+      - name: Setup Gradle
+        uses: gradle/gradle-build-action@v2
+      - name: Run build with Gradle wrapper
+        run: ./gradlew build
+      - name: Run test with Gradle wrapper
+        run: ./gradlew test
