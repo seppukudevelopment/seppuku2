@@ -1,11 +1,9 @@
 [versions]
 kotlin = "1.7.22"
-shadow = "7.1.2"
 byteBuddy = "1.12.19"
 
 [plugins]
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
-shadow = { id = "com.github.johnrengelman.shadow", version.ref = "shadow" }
 
 [libraries]
 kotlin-stdlib = { module = "org.jetbrains.kotlin:kotlin-stdlib", version.ref = "kotlin" }
